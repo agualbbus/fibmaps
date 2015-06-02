@@ -14,6 +14,12 @@ google.maps.event.addDomListener(window, 'load', MapsInitialize);
 $(function(){
 
     var $fibCont=$('#test-fib');
-
+    $fibCont.resizable({
+        resize: function(event, ui){
+          ui.element.empty();
+          drawFib();
+        }
+    });
+    drawFib();
 
 });
