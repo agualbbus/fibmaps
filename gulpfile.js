@@ -2,6 +2,7 @@ var gulp = require('gulp');
 var server = require('gulp-server-livereload');
 var sass = require('gulp-sass');
 var coffee = require('gulp-coffee');
+var watch = require('gulp-watch');
 var gutil = require('gutil');
 
 
@@ -25,6 +26,14 @@ gulp.task('sass:watch', function () {
 });
 
 
+
+
+//WATCH
+gulp.task('watch-cf', function () {
+    watch('./src/coffee/*.coffee', function () {
+        gulp.start('coffee');
+    });
+});
 
 
 

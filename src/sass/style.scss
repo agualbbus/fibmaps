@@ -18,13 +18,15 @@
 }
 
 #test-fib {
-    width: 50%;
-    height: 20%;
+    resize: both;
+    overflow: auto;
+    width: 100px;
     background-color: transparent;
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 50%;
+    left: 50%;
     z-index: 9999;
+    border: 1px solid;
     path {
         stroke: black;
         stroke-opacity: 1;
