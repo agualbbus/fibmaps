@@ -1,44 +1,52 @@
 //maps :AIzaSyBVbAsOk4aQc12Yll-7KazLzLnY1GkMRZY
-var cataratas =new google.maps.LatLng(-25.665913, -54.448626);
 
-function MapsInitialize() {
-    var mapOptions = {
-      center: { lat: -34.397, lng: 150.644},
-      zoom: 13,
-      panControl: true,
-      rotateControl: true
-    };
-    var map = new google.maps.Map(document.getElementById('map-canvas'),mapOptions);
+if (!typeof google == "undefined"){
 
-    // Try W3C Geolocation (Preferred)
-    if(navigator.geolocation) {
-        browserSupportFlag = true;
-        navigator.geolocation.getCurrentPosition(function(position) {
-          initialLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
-          map.setCenter(initialLocation);
-        }, function() {
-          handleNoGeolocation(browserSupportFlag);
-        });
-    }
-    // Browser doesn't support Geolocation
-    else {
-        browserSupportFlag = false;
-        handleNoGeolocation(browserSupportFlag);
-    }
+    var cataratas =new google.maps.LatLng(-25.665913, -54.448626);
 
-    function handleNoGeolocation(errorFlag) {
-        if (errorFlag == true) {
-          alert("Geolocation service failed.");
-          initialLocation = cataratas;
-        } else {
-          alert("Your browser doesn't support geolocation. We've placed you in Antartida.");
-          initialLocation = cataratas;
+    function MapsInitialize() {
+        var mapOptions = {
+          center: { lat: -34.397, lng: 150.644},
+          zoom: 13,
+          panControl: true,
+          rotateControl: true
+        };
+        var map = new google.maps.Map(document.getElementById('map-canvas'),mapOptions);
+
+        // Try W3C Geolocation (Preferred)
+        if(navigator.geolocation) {
+            browserSupportFlag = true;
+            navigator.geolocation.getCurrentPosition(function(position) {
+              initialLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+              map.setCenter(initialLocation);
+            }, function() {
+              handleNoGeolocation(browserSupportFlag);
+            });
         }
-        map.setCenter(initialLocation);
+        // Browser doesn't support Geolocation
+        else {
+            browserSupportFlag = false;
+            handleNoGeolocation(browserSupportFlag);
+        }
+
+        function handleNoGeolocation(errorFlag) {
+            if (errorFlag == true) {
+              alert("Geolocation service failed.");
+              initialLocation = cataratas;
+            } else {
+              alert("Your browser doesn't support geolocation. We've placed you in Antartida.");
+              initialLocation = cataratas;
+            }
+            map.setCenter(initialLocation);
+        }
+
     }
+    google.maps.event.addDomListener(window, 'load', MapsInitialize);
+
+
 
 }
-google.maps.event.addDomListener(window, 'load', MapsInitialize);
+
 
 
 $(function(){
