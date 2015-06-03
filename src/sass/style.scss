@@ -18,15 +18,19 @@
 }
 
 #test-fib {
-    width: 400px;
+    width: 46%;
     background-color: transparent;
     position: absolute;
-    top: 50%;
-    left: 50%;
+    top: 29%;
+    left: 30%;
     z-index: 9999;
-    border: 1px solid;
+
+    svg{
+        stroke: #F50000;
+        stroke-width: 0.4;
+    }
     path {
-        stroke: black;
+        stroke: rgb(0, 168, 255);
         stroke-opacity: 1;
         stroke-width: 1.5;
         fill: none;

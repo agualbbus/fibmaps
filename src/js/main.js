@@ -21,6 +21,6 @@ $(function(){
 //          drawFib();
 //        }
 //    });
-    drawFib();
+    //drawFib();
 
 });
