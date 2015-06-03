@@ -14,12 +14,13 @@ google.maps.event.addDomListener(window, 'load', MapsInitialize);
 $(function(){
 
     var $fibCont=$('#test-fib');
-    $fibCont.resizable({
-        resize: function(event, ui){
-          ui.element.empty();
-          drawFib();
-        }
-    });
+//    $fibCont.resizable({
+//        aspectRatio: true,
+//        resize: function(event, ui){
+//          ui.element.find('svg').remove();
+//          drawFib();
+//        }
+//    });
     drawFib();
 
 });
