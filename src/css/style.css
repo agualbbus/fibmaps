@@ -11,18 +11,29 @@
   height: 100%;
   position: relative; }
 
-#test-fib {
+#fib-cont {
   width: 46%;
   background-color: transparent;
   position: absolute;
-  top: 29%;
-  left: 30%;
-  z-index: 9999; }
-  #test-fib svg {
+  top: 9%;
+  left: 16%;
+  z-index: 9999;
+  cursor: move; }
+  #fib-cont.disable {
+    display: none; }
+  #fib-cont svg {
     stroke: #F50000;
     stroke-width: 0.4; }
-  #test-fib path {
+  #fib-cont path {
     stroke: #00a8ff;
     stroke-opacity: 1;
     stroke-width: 1.5;
     fill: none; }
+
+aside {
+  width: 11% !important;
+  background-color: #40CFA9;
+  position: fixed;
+  bottom: 17px;
+  right: 0%;
+  z-index: 9999; }
