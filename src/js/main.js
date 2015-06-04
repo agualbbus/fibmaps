@@ -1,6 +1,6 @@
 //maps :AIzaSyBVbAsOk4aQc12Yll-7KazLzLnY1GkMRZY
 
-if (!typeof google == "undefined"){
+if (typeof google !== "undefined"){
 
     var cataratas =new google.maps.LatLng(-25.665913, -54.448626);
 
