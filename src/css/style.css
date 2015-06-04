@@ -31,9 +31,12 @@
     fill: none; }
 
 aside {
-  width: 11% !important;
+  width: 67% !important;
+  max-width: 700px !important;
   background-color: #40CFA9;
   position: fixed;
-  bottom: 17px;
+  bottom: 0;
   right: 0%;
   z-index: 9999; }
+  aside button {
+    margin-top: 10px; }
