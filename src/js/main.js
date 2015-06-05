@@ -58,7 +58,7 @@ $(function(){
         $rotate = $('#rotate'),
         $hideFib = $('#hideFib'),
         $sizeFib = $('#sizeFib'),
-        $transCont = $('#translate-container')
+        $transCont = $('#translate-container');
 
     $sizeFib.val( $fibCont.width() );
 
@@ -105,6 +105,8 @@ $(function(){
         },
         // call this function on every dragend event
         onend: function (event) {
+          $transCont.removeClass('dragging');
+          $fibCont.removeClass('dragging');
           var textEl = event.target.querySelector('p');
 
           textEl && (textEl.textContent =
@@ -113,6 +115,37 @@ $(function(){
                          event.dy * event.dy)|0) + 'px');
         }
       });
+
+
+    $fibCont.on('dblclick',function(){
+
+        $(this).toggleClass('dragging');
+        $transCont.toggleClass('dragging');
+
+
+    });
+
+    $transCont.on('dblclick',function(){
+        setTimeout(function(){
+            $fibCont.removeClass('dragging');
+            $transCont.toggleClass('dragging');
+        },0);
+
+    });
+
+
+//
+//    $fibCont.on('mouseout',function(){
+//        $this=$(this);
+//        setTimeout(function(){
+//            $transCont.removeClass('dragging');
+//            console.log('out')
+//        },500)
+//    });
+
+
+
+
 
     //use this obj to store transforms values
     var transform = {
@@ -183,14 +216,20 @@ $(function(){
       }
     }
 
-    function transformIt(translate){
+
+
+
+
+
+
+    function transformIt(){
 
         var origin = tOrigin();
 
         $fibSvg.css('transform', 'rotateX(' +transform.rot.x+ 'deg) rotateY(' +transform.rot.y+ 'deg)');
 
         $fibCont.css({
-          'transform': 'rotateZ(' +transform.rot.z+ 'deg)',
+          'transform': 'rotateZ(' +transform.rot.z+ 'deg)',// translate(' + transform.trans.x + 'px, ' + transform.trans.y + 'px)',
           'transform-origin': tOrigin().x+' '+tOrigin().y
         });
 

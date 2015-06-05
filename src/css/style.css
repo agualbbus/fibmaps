@@ -12,20 +12,34 @@
   position: relative; }
 
 #translate-container {
-  position: absolute;
+  position: relative;
   width: 200%;
   height: 200%;
-  z-index: 9999; }
+  z-index: 0;
+  cursor: move; }
+  #translate-container.dragging {
+    z-index: 9999; }
 
 #fib-cont {
-  width: 46%;
   background-color: transparent;
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 9999;
-  cursor: move; }
+  z-index: 999; }
+  #fib-cont:hover:after {
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 199px;
+    text-align: center;
+    background-color: #B3B3B3;
+    content: 'Double Click to move';
+    font-size: 1rem;
+    color: #f4f4f4; }
+  #fib-cont.dragging {
+    cursor: move; }
   #fib-cont.disable {
     display: none; }
   #fib-cont svg {
