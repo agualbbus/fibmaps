@@ -17,12 +17,21 @@
 
 }
 
+#translate-container{
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    z-index: 9999;
+}
+
+
 #fib-cont {
     width: 46%;
     background-color: transparent;
     position: absolute;
-    top: 9%;
-    left: 16%;
+    top:0;
+    left: 0;
+    width: 100%;
     z-index: 9999;
     cursor: move;
     //resize: horizontal;

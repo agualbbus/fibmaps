@@ -57,7 +57,8 @@ $(function(){
         $flipH = $('#flipH'),
         $rotate = $('#rotate'),
         $hideFib = $('#hideFib'),
-        $sizeFib = $('#sizeFib');
+        $sizeFib = $('#sizeFib'),
+        $transCont = $('#translate-container')
 
     $sizeFib.val( $fibCont.width() );
 
@@ -72,16 +73,16 @@ $(function(){
 // target elements with the "draggable" class
 
 
-    interact('#fib-cont')
+    interact('#translate-container')
       .draggable({
         // enable inertial throwing
         //inertia: true,
         // keep the element within the area of it's parent
-        restrict: {
-          restriction: "parent",
-          endOnly: true,
-          elementRect: { top: 0, left: 0, bottom: 1, right: 1 }
-        },
+//        restrict: {
+//          restriction: "parent",
+//          endOnly: true,
+//          elementRect: { top: 0, left: 0, bottom: 1, right: 1 }
+//        },
 
         // call this function on every dragmove event
         onmove: function(event){
@@ -185,12 +186,15 @@ $(function(){
     function transformIt(translate){
 
         var origin = tOrigin();
+
         $fibSvg.css('transform', 'rotateX(' +transform.rot.x+ 'deg) rotateY(' +transform.rot.y+ 'deg)');
+
         $fibCont.css({
-          'transform': 'rotateZ(' +transform.rot.z+ 'deg) translate(' + transform.trans.x + 'px, ' + transform.trans.y + 'px)',
+          'transform': 'rotateZ(' +transform.rot.z+ 'deg)',
           'transform-origin': tOrigin().x+' '+tOrigin().y
         });
 
+        $transCont.css('transform', 'translate(' + transform.trans.x + 'px, ' + transform.trans.y + 'px)' );
     }
 
 });
