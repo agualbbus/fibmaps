@@ -70,10 +70,12 @@ $(function(){
 //    })
 //    .draggable();
 // target elements with the "draggable" class
+
+
     interact('#fib-cont')
       .draggable({
         // enable inertial throwing
-        inertia: true,
+        //inertia: true,
         // keep the element within the area of it's parent
         restrict: {
           restriction: "parent",
@@ -82,7 +84,24 @@ $(function(){
         },
 
         // call this function on every dragmove event
-        onmove: dragMoveListener,
+        onmove: function(event){
+            var target = event.target,
+                // keep the dragged position in the data-x/data-y attributes
+                x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx,
+                y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
+            //apply transform
+            transform.trans = {
+                x: x,
+                y: y
+            }
+
+            transformIt();
+
+            // update the posiion attributes
+            target.setAttribute('data-x', x);
+            target.setAttribute('data-y', y);
+
+        },
         // call this function on every dragend event
         onend: function (event) {
           var textEl = event.target.querySelector('p');
@@ -94,38 +113,21 @@ $(function(){
         }
       });
 
-  function dragMoveListener (event) {
-    var target = event.target,
-        // keep the dragged position in the data-x/data-y attributes
-        x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx,
-        y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
-
-    // translate the element
-    target.style.webkitTransform =
-    target.style.transform =
-      'translate(' + x + 'px, ' + y + 'px)';
-
-    // update the posiion attributes
-    target.setAttribute('data-x', x);
-    target.setAttribute('data-y', y);
-  }
-
-  // this is used later in the resizing demo
-  window.dragMoveListener = dragMoveListener;
-    var rot = {
-        z: 0,
-        y: 0,
-        x: 0
+    //use this obj to store transforms values
+    var transform = {
+        rot: { z: 0, y:0, x:0},
+        trans: {x:0, y:0}
     };
 
+
     $flipV.on('click', function(e){
-        rot.x = ( rot.x==0 ? 180 : 0 );
-        transform();
+        transform.rot.x = ( transform.rot.x==0 ? 180 : 0 );
+        transformIt();
     });
 
     $flipH.on('click', function(e){
-        rot.y = ( rot.y==0 ? 180 : 0 );
-        transform();
+        transform.rot.y = ( transform.rot.y==0 ? 180 : 0 );
+        transformIt();
     });
 
     $hideFib.on('click', function(e){
@@ -136,8 +138,8 @@ $(function(){
     $rotate.on('change.fndtn.slider', function(e){
         var deg = parseInt( $(this).attr('data-slider') );
             //deg = per * 360 / 100 - 180;
-        rot.z = parseInt( deg );
-        transform();
+        transform.rot.z = parseInt( deg );
+        transformIt();
     });
 
     $sizeFib.on('change.fndtn.slider', function(e){
@@ -157,19 +159,19 @@ $(function(){
           r='right',
           t='top',
           b='bottom';
-      if(rot.x == 0 && rot.y == 0){
+      if(transform.rot.x == 0 && transform.rot.y == 0){
         x = l;
         y = b;
       }
-      else if(rot.x == 180 && rot.y == 180){
+      else if(transform.rot.x == 180 && transform.rot.y == 180){
         x = r;
         y = t;
       }
-      else if(rot.x == 180 && rot.y == 0){
+      else if(transform.rot.x == 180 && transform.rot.y == 0){
         x = l;
         y = t;
       }
-      else if(rot.x == 0 && rot.y ==180 ){
+      else if(transform.rot.x == 0 && transform.rot.y ==180 ){
         x = r;
         y = b;
       }
@@ -180,14 +182,13 @@ $(function(){
       }
     }
 
-    function transform(){
+    function transformIt(translate){
 
         var origin = tOrigin();
-        console.log(rot, origin);
-        $fibSvg.css('transform', 'rotateX(' +rot.x+ 'deg) rotateY(' +rot.y+ 'deg)');
+        $fibSvg.css('transform', 'rotateX(' +transform.rot.x+ 'deg) rotateY(' +transform.rot.y+ 'deg)');
         $fibCont.css({
-          'transform': 'rotateZ(' +rot.z+ 'deg)',
-          'transform-origin': origin.x+' '+origin.y
+          'transform': 'rotateZ(' +transform.rot.z+ 'deg) translate(' + transform.trans.x + 'px, ' + transform.trans.y + 'px)',
+          'transform-origin': tOrigin().x+' '+tOrigin().y
         });
 
     }
