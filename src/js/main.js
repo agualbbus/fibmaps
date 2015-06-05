@@ -34,7 +34,7 @@ if (typeof google !== "undefined"){
               alert("Geolocation service failed.");
               initialLocation = cataratas;
             } else {
-              alert("Your browser doesn't support geolocation. We've placed you in Antartida.");
+              alert("Your browser doesn't support geolocation. We've placed you in Iguazu.");
               initialLocation = cataratas;
             }
             map.setCenter(initialLocation);
@@ -60,7 +60,7 @@ $(function(){
         $sizeFib = $('#sizeFib'),
         $transCont = $('#translate-container');
 
-    $sizeFib.val( $fibCont.width() );
+
 
 //    $fibCont.resizable({
 //        handles: 'n, e, s, w',
@@ -105,8 +105,7 @@ $(function(){
         },
         // call this function on every dragend event
         onend: function (event) {
-          $transCont.removeClass('dragging');
-          $fibCont.removeClass('dragging');
+
           var textEl = event.target.querySelector('p');
 
           textEl && (textEl.textContent =
@@ -116,32 +115,6 @@ $(function(){
         }
       });
 
-
-    $fibCont.on('dblclick',function(){
-
-        $(this).toggleClass('dragging');
-        $transCont.toggleClass('dragging');
-
-
-    });
-
-    $transCont.on('dblclick',function(){
-        setTimeout(function(){
-            $fibCont.removeClass('dragging');
-            $transCont.toggleClass('dragging');
-        },0);
-
-    });
-
-
-//
-//    $fibCont.on('mouseout',function(){
-//        $this=$(this);
-//        setTimeout(function(){
-//            $transCont.removeClass('dragging');
-//            console.log('out')
-//        },500)
-//    });
 
 
 
@@ -153,6 +126,11 @@ $(function(){
         trans: {x:0, y:0}
     };
 
+
+
+
+
+    //CLICKS AND CHANGES
 
     $flipV.on('click', function(e){
         transform.rot.x = ( transform.rot.x==0 ? 180 : 0 );
@@ -169,22 +147,49 @@ $(function(){
         $(this).html( ( $(this).html()=="Hide" ? "Show" : "Hide"  ) );
     });
 
+
+    $rotate.find('.inc').on('click',function(){
+        var val = parseFloat($rotate.attr('data-slider')) + .5;
+        $rotate.foundation('slider', 'set_value', val );
+    });
+
+    $rotate.find('.dec').on('click',function(){
+        var val = parseFloat($rotate.attr('data-slider')) - .5;
+        $rotate.foundation('slider', 'set_value', val );
+    });
+
+
     $rotate.on('change.fndtn.slider', function(e){
-        var deg = parseInt( $(this).attr('data-slider') );
+        var deg = parseFloat( $(this).attr('data-slider') );
             //deg = per * 360 / 100 - 180;
-        transform.rot.z = parseInt( deg );
+        transform.rot.z = deg;
         transformIt();
     });
 
+    $sizeFib.inc = $sizeFib.find('.inc');
+    $sizeFib.dec = $sizeFib.find('.dec');
     $sizeFib.on('change.fndtn.slider', function(e){
         var per = parseInt( $(this).attr('data-slider') ),
             size = per * ($(window).width() * 1.25) / 100;
-        console.log(size);
         resizeFib(size);
     });
 
+
+
+
+
+
+
+
+
+
     function resizeFib(val){
         $fibCont.width(val);
+        $transCont.css({
+            'width': $fibCont.width(),
+            'height': $fibCont.height(),
+        } );
+
     }
 
     function tOrigin(){
@@ -217,11 +222,6 @@ $(function(){
     }
 
 
-
-
-
-
-
     function transformIt(){
 
         var origin = tOrigin();
@@ -233,7 +233,15 @@ $(function(){
           'transform-origin': tOrigin().x+' '+tOrigin().y
         });
 
-        $transCont.css('transform', 'translate(' + transform.trans.x + 'px, ' + transform.trans.y + 'px)' );
+        $transCont.css({
+            'transform': 'translate(' + transform.trans.x + 'px, ' + transform.trans.y + 'px)',
+            'width': $fibCont.width(),
+            'height': $fibCont.height(),
+        } );
+
     }
+
+
+
 
 });

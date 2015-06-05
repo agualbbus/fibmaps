@@ -12,10 +12,10 @@
   position: relative; }
 
 #translate-container {
-  position: relative;
-  width: 200%;
-  height: 200%;
-  z-index: 0;
+  position: absolute;
+  width: 100px;
+  height: auto;
+  z-index: 999;
   cursor: move; }
   #translate-container.dragging {
     z-index: 9999; }
@@ -27,17 +27,6 @@
   left: 0;
   width: 100%;
   z-index: 999; }
-  #fib-cont:hover:after {
-    display: block;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 199px;
-    text-align: center;
-    background-color: #B3B3B3;
-    content: 'Double Click to move';
-    font-size: 1rem;
-    color: #f4f4f4; }
   #fib-cont.dragging {
     cursor: move; }
   #fib-cont.disable {
@@ -61,3 +50,18 @@ aside {
   z-index: 9999; }
   aside button {
     margin-top: 10px; }
+
+.range-slider .manual {
+  display: block;
+  position: absolute;
+  top: -5px;
+  font-weight: bold;
+  cursor: pointer; }
+
+.range-slider .inc {
+  right: -12px;
+  left: initial; }
+
+.range-slider .dec {
+  left: -12px;
+  right: initial; }
