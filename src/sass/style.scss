@@ -74,14 +74,22 @@ aside{
   }
 }
 
-$MP-off :-12px;
+$MP-off :-21px;
 .range-slider{
+      width: 85%;
+      margin-left: auto;
+      margin-right: auto;
     .manual{
-        display: block;
-        position: absolute;
-        top: -5px;
-        font-weight: bold;
-        cursor: pointer;
+      text-align: center;
+      display: block;
+      padding: 0;
+      margin: 0;
+      width: 16px;
+      height: 16px;
+      position: absolute;
+      top: -1px;
+      font-weight: bold;
+      cursor: pointer;
     }
     .inc{
         right: $MP-off;

@@ -51,17 +51,24 @@ aside {
   aside button {
     margin-top: 10px; }
 
-.range-slider .manual {
-  display: block;
-  position: absolute;
-  top: -5px;
-  font-weight: bold;
-  cursor: pointer; }
-
-.range-slider .inc {
-  right: -12px;
-  left: initial; }
-
-.range-slider .dec {
-  left: -12px;
-  right: initial; }
+.range-slider {
+  width: 85%;
+  margin-left: auto;
+  margin-right: auto; }
+  .range-slider .manual {
+    text-align: center;
+    display: block;
+    padding: 0;
+    margin: 0;
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    top: -1px;
+    font-weight: bold;
+    cursor: pointer; }
+  .range-slider .inc {
+    right: -21px;
+    left: initial; }
+  .range-slider .dec {
+    left: -21px;
+    right: initial; }
