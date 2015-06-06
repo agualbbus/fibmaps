@@ -53,6 +53,7 @@ $(function(){
     $(document).foundation();
     var $fibCont = $('#fib-cont'),
         $fibSvg = $('#fib-svg'),
+        $fibPath = $('#fib-cont path, #fib-cont use'),
         $flipV = $('#flipV'),
         $flipH = $('#flipH'),
         $rotate = $('#rotate'),
@@ -128,8 +129,6 @@ $(function(){
 
 
 
-
-
     //CLICKS AND CHANGES
 
     $flipV.on('click', function(e){
@@ -166,10 +165,20 @@ $(function(){
         transformIt();
     });
 
-    $sizeFib.inc = $sizeFib.find('.inc');
-    $sizeFib.dec = $sizeFib.find('.dec');
+
+
+    $sizeFib.find('.inc').on('click',function(){
+        var val = parseFloat($sizeFib.attr('data-slider')) + 0.2;
+        $sizeFib.foundation('slider', 'set_value', val );
+    });
+
+    $sizeFib.find('.dec').on('click',function(){
+        var val = parseFloat($sizeFib.attr('data-slider')) - 0.2;
+        $sizeFib.foundation('slider', 'set_value', val );
+    });
+
     $sizeFib.on('change.fndtn.slider', function(e){
-        var per = parseInt( $(this).attr('data-slider') ),
+        var per = parseFloat( $(this).attr('data-slider') ),
             size = per * ($(window).width() * 1.25) / 100;
         resizeFib(size);
     });
@@ -241,7 +250,7 @@ $(function(){
 
     }
 
-
+  //colors
 
 
 });
