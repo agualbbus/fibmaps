@@ -19,8 +19,6 @@
 
 #translate-container{
     position: absolute;
-    width: 100px;
-    height: auto;
     z-index: 999;
     cursor: move;
     &.dragging{
