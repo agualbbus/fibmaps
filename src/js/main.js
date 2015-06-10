@@ -82,7 +82,7 @@ $(function(){
         $lock = $('#lock');
 
 
-
+        window.transcont = $transCont ;
 
 
     interact('#translate-container')
@@ -199,14 +199,32 @@ $(function(){
 
         if(locked === false){
 
+            Math.sqrt( (width()*.382),6;
+
+
+            var sw = new google.maps.Point(
+                $transCont.position().left ,
+                $transCont.position().top + $transCont.height()
+            );
+            var ne = new google.maps.Point(
+                $transCont.position().left + $transCont.width(),
+                $transCont.position().top
+
+            );
+
+            console.log(sw, ne);
             var proj = map.getProjection();
-            var point = new google.maps.Point($transCont.position().left, $transCont.position().top);
-            var coor = proj.fromPointToLatLng(point);
+            //var point = new google.maps.Point($transCont.position().left, $transCont.position().top);
+            sw = proj.fromPointToLatLng(sw);
+            ne = proj.fromPointToLatLng(ne);
+            console.log(sw, ne);
 
-            var swBound = new google.maps.LatLng(-22.92804166565176, -43.23171615600586);
-            var neBound = new google.maps.LatLng(-22.88503184835787, -43.15824508666992);
-            var bounds = new google.maps.LatLngBounds(swBound, neBound);
 
+            var swBound = new google.maps.LatLng(sw);//new google.maps.LatLng(-22.92804166565176, -43.23171615600586);
+            var neBound =new google.maps.LatLng(ne); //new google.maps.LatLng(-22.88503184835787, -43.15824508666992);
+            var bounds = new google.maps.LatLngBounds(sw, ne);
+
+            console.log(bounds);
 
             overlay = new fibOverlay(bounds, fibDiv, map);
             $transCont.addClass('hide');
