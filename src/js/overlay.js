@@ -1,8 +1,9 @@
 /** @constructor */
-function fibOverlay(bounds, elem, map) {
+function fibOverlay(elem, map, bounds) {
 
   // Initialize all properties.
-  this.bounds_ = bounds;
+  this.bounds_ = bounds || null;
+
   this.elem_ = elem;//.cloneNode(true);
   //this.elem_.id = "cloned-fib";
   this.map_ = map;
@@ -83,8 +84,9 @@ fibOverlay.prototype.onAdd = function() {
 
                 that.origin_ = e;
                 that.position_ = latLngPos;
-                that.bounds_ = new google.maps.LatLngBounds(sw, ne);
+                that.bounds_ =  new google.maps.LatLngBounds(sw, ne);
                 that.draw();
+                console.log('drawed in drag')
             });
         }
   );
@@ -112,27 +114,24 @@ fibOverlay.prototype.draw = function() {
   // Retrieve the south-west and north-east coordinates of this overlay
   // in LatLngs and convert them to pixel coordinates.
   // We'll use these coordinates to resize the div.
-  var sw = proj.fromLatLngToDivPixel(this.bounds_.getSouthWest());
-  var ne = proj.fromLatLngToDivPixel(this.bounds_.getNorthEast());
-
-  // Resize the image's div to fit the indicated dimensions.
   var div = this.div_;
+  if (this.bounds_ !== null ){
 
-  div.style.transform = 'initial';
-  div.style.left = sw.x + 'px';
-  div.style.top = ne.y + 'px';
-  div.style.width = (ne.x - sw.x) + 'px';
-  div.style.height = (sw.y - ne.y) + 'px';
+      var sw = proj.fromLatLngToDivPixel(this.bounds_.getSouthWest());
+      var ne = proj.fromLatLngToDivPixel(this.bounds_.getNorthEast());
+      div.style.transform = 'initial';
+      div.style.left = sw.x + 'px';
+      div.style.top = ne.y + 'px';
+      div.style.width = (ne.x - sw.x) + 'px';
+      div.style.height = (sw.y - ne.y) + 'px';
 
-  /* //
-
-  var pos = this.getProjection().fromLatLngToDivPixel(this.position_);
-
-  //var sw =  this.getProjection().fromLatLngToDivPixel(this.get('position'));
-
-  this.div_.style.left = pos.x + 'px';
-  this.div_.style.top = pos.y + 'px';
-  // */
+  }
+  else{
+      var pos = proj.fromLatLngToDivPixel(this.position_);
+      div.style.left = pos.x + 'px';
+      div.style.top = pos.y + 'px';
+      console.log('position first time', pos);
+  }
 
 
 };

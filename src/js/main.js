@@ -47,9 +47,9 @@ if (typeof google !== "undefined"){
 
         var swBound = new google.maps.LatLng(-22.92804166565176, -43.23171615600586);
         var neBound = new google.maps.LatLng(-22.88503184835787, -43.15824508666992);
-        var bounds = new google.maps.LatLngBounds(initialLocation);
+        var bounds = new google.maps.LatLngBounds(swBound, neBound );
 
-        overlay = new fibOverlay(bounds, fibDiv, map);
+        overlay = new fibOverlay(fibDiv, map);
         //click event ltnr
         google.maps.event.addListener(map, 'click', function(e){
             console.log(e.latLng);
@@ -66,135 +66,6 @@ if (typeof google !== "undefined"){
 
 
 
-
-//TRANFORMS FUNCTIONS
-
-//use this obj to store transforms values
-var transform = {
-    rot: { z: 0, y:0, x:0},
-    trans: {x:0, y:0}
-};
-
-
-
-function dragIt(elem, transformFunc){
-      elem.draggable({
-
-        // call this function on every dragmove event
-        onmove: function(event){
-            var target = event.target,
-                // keep the dragged position in the data-x/data-y attributes
-                x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx,
-                y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
-            //apply transform
-            transform.trans = {
-                x: x,
-                y: y
-            }
-
-            transformFunc();
-
-            // update the posiion attributes
-            target.setAttribute('data-x', x);
-            target.setAttribute('data-y', y);
-
-        },
-        // call this function on every dragend event
-        onend: function (event) {
-
-          var textEl = event.target.querySelector('p');
-
-          textEl && (textEl.textContent =
-            'moved a distance of '
-            + (Math.sqrt(event.dx * event.dx +
-                         event.dy * event.dy)|0) + 'px');
-        }
-      });
-}
-
-
-//TRANSFORM CLASS
-//Contructor
-function transformIt(svg, svgCont, transCont){
-
-    this.svg_ = svg;
-    this.svgCont_ = svgCont;
-    this.transCont_ = transCont;
-
-}
-transformIt.prototype.doIt = function(){
-    var origin = this.tOrigin();
-    this.svg_.css('transform', 'rotateX(' +transform.rot.x+ 'deg) rotateY(' +transform.rot.y+ 'deg)');
-
-    this.svgCont_.css({
-      'transform': 'rotateZ(' +transform.rot.z+ 'deg)',// translate(' + transform.trans.x + 'px, ' + transform.trans.y + 'px)',
-      'transform-origin': tOrigin().x+' '+tOrigin().y
-    });
-
-    this.transCont_.css({
-        'transform': 'translate(' + transform.trans.x + 'px, ' + transform.trans.y + 'px)',
-        'width': this.svgCont_.width(),
-        'height': this.svgCont_.height(),
-    } );
-
-}
-//tranform origin
-transformIt.tOrigin = function(){
-  var x,y,
-      l='left',
-      r='right',
-      t='top',
-      b='bottom';
-  if(transform.rot.x == 0 && transform.rot.y == 0){
-    x = l;
-    y = b;
-  }
-  else if(transform.rot.x == 180 && transform.rot.y == 180){
-    x = r;
-    y = t;
-  }
-  else if(transform.rot.x == 180 && transform.rot.y == 0){
-    x = l;
-    y = t;
-  }
-  else if(transform.rot.x == 0 && transform.rot.y ==180 ){
-    x = r;
-    y = b;
-  }
-
-  return {
-    x: x,
-    y: y
-  }
-}
-
-//RESIZE CONTAINER
-function resizeFib(svgCont, transCont, val){
-    fibCont.width(val);
-    transCont.css({
-        'width': $fibCont.width(),
-        'height': $fibCont.height(),
-    } );
-
-}
-
-
-    var $fibCont = $('#fib-cont'),
-        $fibSvg = $('#fib-svg'),
-        $fibPath = $('#fib-cont path, #fib-cont use'),
-        $flipV = $('#flipV'),
-        $flipH = $('#flipH'),
-        $rotate = $('#rotate'),
-        $hideFib = $('#hideFib'),
-        $sizeFib = $('#sizeFib'),
-        $transCont = $('#translate-container'),
-        $lock = $('#lock');
-
-var tranformFib= new transformIt($fibSvg, $fibCont, $transCont );
-
-
-
-//ON READY
 $(function(){
     $(document).foundation();
     var $fibCont = $('#fib-cont'),
@@ -209,9 +80,23 @@ $(function(){
         $lock = $('#lock');
 
 
+        window.transcont = $transCont ;
+
+
+
+
+
+
+    //use this obj to store transforms values
+    var transform = {
+        rot: { z: 0, y:0, x:0},
+        trans: {x:0, y:0}
+    };
+
+
 
     //CLICKS AND CHANGES
-    /*/
+
     $flipV.on('click', function(e){
         transform.rot.x = ( transform.rot.x==0 ? 180 : 0 );
         transformIt();
@@ -271,56 +156,59 @@ $(function(){
     });
 
 
-    //*/
 
-    //locking stuff
-    var locked = false;
-    $lock.on('click', function(e){
+    function resizeFib(val){
+        $transCont.css({
+            'width': val,
+        } );
+    }
 
-        if(locked === false){
+    function tOrigin(){
+      var x,y,
+          l='left',
+          r='right',
+          t='top',
+          b='bottom';
+      if(transform.rot.x == 0 && transform.rot.y == 0){
+        x = l;
+        y = b;
+      }
+      else if(transform.rot.x == 180 && transform.rot.y == 180){
+        x = r;
+        y = t;
+      }
+      else if(transform.rot.x == 180 && transform.rot.y == 0){
+        x = l;
+        y = t;
+      }
+      else if(transform.rot.x == 0 && transform.rot.y ==180 ){
+        x = r;
+        y = b;
+      }
 
-            //Math.sqrt( (width()*.382),6;
-            //first squaer
-
-            var sw = new google.maps.Point(
-                $transCont.position().left ,
-                $transCont.position().top + $transCont.height()
-            );
-            var ne = new google.maps.Point(
-                $transCont.position().left + $transCont.width(),
-                $transCont.position().top
-
-            );
-
-            console.log(sw, ne);
-            var proj = map.getProjection();
-            //var point = new google.maps.Point($transCont.position().left, $transCont.position().top);
-            sw = proj.fromPointToLatLng(sw);
-            ne = proj.fromPointToLatLng(ne);
-            console.log(sw, ne);
-
-
-            var swBound = new google.maps.LatLng(sw);//new google.maps.LatLng(-22.92804166565176, -43.23171615600586);
-            var neBound =new google.maps.LatLng(ne); //new google.maps.LatLng(-22.88503184835787, -43.15824508666992);
-            var bounds = new google.maps.LatLngBounds(sw, ne);
-
-            console.log(bounds);
-
-            overlay = new fibOverlay(bounds, fibDiv, map);
-            $transCont.addClass('hide');
-            locked = true;
-        }
-        else{
-            $transCont.removeClass('hide');
-            overlay.setMap(null);
-            locked = false;
-        }
-
-    });
+      return {
+        x: x,
+        y: y
+      }
+    }
 
 
+    function transformIt(){
+
+        var origin = tOrigin();
+
+        $fibSvg.css('transform', 'rotateX(' +transform.rot.x+ 'deg) rotateY(' +transform.rot.y+ 'deg)');
+
+        $fibCont.css({
+          'transform': 'rotateZ(' +transform.rot.z+ 'deg)',// translate(' + transform.trans.x + 'px, ' + transform.trans.y + 'px)',
+          'transform-origin': tOrigin().x+' '+tOrigin().y
+        });
 
 
+
+    }
+
+  //colors
 
 
 });
