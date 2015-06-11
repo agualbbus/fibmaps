@@ -58,15 +58,32 @@ fibOverlay.prototype.onAdd = function() {
           'mousemove',
           function(e){
             var origin = that.origin_,
+                proj = that.getProjection(),
                 left   = origin.clientX-e.clientX,
                 top    = origin.clientY-e.clientY,
-                pos    = that.getProjection()
-                          .fromLatLngToDivPixel(that.position_),
-                latLng = that.getProjection()
-                          .fromDivPixelToLatLng(new google.maps.Point(pos.x-left,
-                                                                      pos.y-top));
+                //the position
+                pos    = proj.fromLatLngToDivPixel(that.position_),
+                latLngPos = proj.fromDivPixelToLatLng( new google.maps.Point(pos.x-left, pos.y-top) ),
+
+                //set the new bounds
+                sw = proj.fromDivPixelToLatLng(
+                    new google.maps.Point(
+                        pos.x-left,
+                        (pos.y-top) + div.offsetHeight
+                    )
+                ),
+
+                ne = proj.fromDivPixelToLatLng(
+                    new google.maps.Point(
+                        pos.x-left + div.offsetWidth,
+                        (pos.y-top)
+                    )
+                );
+
+
                 that.origin_ = e;
-                that.position_ = latLng;
+                that.position_ = latLngPos;
+                that.bounds_ = new google.maps.LatLngBounds(sw, ne);
                 that.draw();
             });
         }
@@ -85,18 +102,18 @@ fibOverlay.prototype.onAdd = function() {
 };
 
 fibOverlay.prototype.draw = function() {
-  /* //
+  // */
 
   // We use the south-west and north-east
   // coordinates of the overlay to peg it to the correct position and size.
   // To do this, we need to retrieve the projection from the overlay.
-  var overlayProjection = this.getProjection();
+  var proj = this.getProjection();
 
   // Retrieve the south-west and north-east coordinates of this overlay
   // in LatLngs and convert them to pixel coordinates.
   // We'll use these coordinates to resize the div.
-  var sw = overlayProjection.fromLatLngToDivPixel(this.bounds_.getSouthWest());
-  var ne = overlayProjection.fromLatLngToDivPixel(this.bounds_.getNorthEast());
+  var sw = proj.fromLatLngToDivPixel(this.bounds_.getSouthWest());
+  var ne = proj.fromLatLngToDivPixel(this.bounds_.getNorthEast());
 
   // Resize the image's div to fit the indicated dimensions.
   var div = this.div_;
@@ -107,7 +124,7 @@ fibOverlay.prototype.draw = function() {
   div.style.width = (ne.x - sw.x) + 'px';
   div.style.height = (sw.y - ne.y) + 'px';
 
-  //*/
+  /* //
 
   var pos = this.getProjection().fromLatLngToDivPixel(this.position_);
 
@@ -115,7 +132,7 @@ fibOverlay.prototype.draw = function() {
 
   this.div_.style.left = pos.x + 'px';
   this.div_.style.top = pos.y + 'px';
-
+  // */
 
 
 };
