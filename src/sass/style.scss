@@ -21,6 +21,7 @@
     position: absolute;
     z-index: 999;
     cursor: move;
+    width: 500px;
     &.dragging{
         z-index: 9999;
     }

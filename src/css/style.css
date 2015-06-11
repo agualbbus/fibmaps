@@ -14,7 +14,8 @@
 #translate-container {
   position: absolute;
   z-index: 999;
-  cursor: move; }
+  cursor: move;
+  width: 500px; }
   #translate-container.dragging {
     z-index: 9999; }
   #translate-container.hide {

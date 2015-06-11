@@ -3,11 +3,11 @@
 if (typeof google !== "undefined"){
     var overlay;
     var fibDiv = document.getElementById('translate-container');
-    var cataratas =new google.maps.LatLng(-25.665913, -54.448626);
-
+    var cataratas = new google.maps.LatLng(-25.665913, -54.448626);
+    var initialLocation =  cataratas;
     var mapDiv = document.getElementById('map-canvas');
     var mapOptions = {
-          center: { lat: -34.397, lng: 150.644},
+          center: initialLocation,//{ lat: -34.397, lng: 150.644},
           zoom: 13,
           panControl: true,
           rotateControl: true
@@ -16,8 +16,6 @@ if (typeof google !== "undefined"){
 
 
     function MapsInitialize() {
-
-
         // Try W3C Geolocation (Preferred)
         if(navigator.geolocation) {
             browserSupportFlag = true;
@@ -49,9 +47,9 @@ if (typeof google !== "undefined"){
 
         var swBound = new google.maps.LatLng(-22.92804166565176, -43.23171615600586);
         var neBound = new google.maps.LatLng(-22.88503184835787, -43.15824508666992);
-        var bounds = new google.maps.LatLngBounds(swBound, neBound);
+        var bounds = new google.maps.LatLngBounds(initialLocation);
 
-        //overlay = new fibOverlay(bounds, fibDiv, map);
+        overlay = new fibOverlay(bounds, fibDiv, map);
         //click event ltnr
         google.maps.event.addListener(map, 'click', function(e){
             console.log(e.latLng);
@@ -68,25 +66,19 @@ if (typeof google !== "undefined"){
 
 
 
-$(function(){
-    $(document).foundation();
-    var $fibCont = $('#fib-cont'),
-        $fibSvg = $('#fib-svg'),
-        $fibPath = $('#fib-cont path, #fib-cont use'),
-        $flipV = $('#flipV'),
-        $flipH = $('#flipH'),
-        $rotate = $('#rotate'),
-        $hideFib = $('#hideFib'),
-        $sizeFib = $('#sizeFib'),
-        $transCont = $('#translate-container'),
-        $lock = $('#lock');
+
+//TRANFORMS FUNCTIONS
+
+//use this obj to store transforms values
+var transform = {
+    rot: { z: 0, y:0, x:0},
+    trans: {x:0, y:0}
+};
 
 
-        window.transcont = $transCont ;
 
-
-    interact('#translate-container')
-      .draggable({
+function dragIt(elem, transformFunc){
+      elem.draggable({
 
         // call this function on every dragmove event
         onmove: function(event){
@@ -100,7 +92,7 @@ $(function(){
                 y: y
             }
 
-            transformIt();
+            transformFunc();
 
             // update the posiion attributes
             target.setAttribute('data-x', x);
@@ -118,22 +110,108 @@ $(function(){
                          event.dy * event.dy)|0) + 'px');
         }
       });
+}
+
+
+//TRANSFORM CLASS
+//Contructor
+function transformIt(svg, svgCont, transCont){
+
+    this.svg_ = svg;
+    this.svgCont_ = svgCont;
+    this.transCont_ = transCont;
+
+}
+transformIt.prototype.doIt = function(){
+    var origin = this.tOrigin();
+    this.svg_.css('transform', 'rotateX(' +transform.rot.x+ 'deg) rotateY(' +transform.rot.y+ 'deg)');
+
+    this.svgCont_.css({
+      'transform': 'rotateZ(' +transform.rot.z+ 'deg)',// translate(' + transform.trans.x + 'px, ' + transform.trans.y + 'px)',
+      'transform-origin': tOrigin().x+' '+tOrigin().y
+    });
+
+    this.transCont_.css({
+        'transform': 'translate(' + transform.trans.x + 'px, ' + transform.trans.y + 'px)',
+        'width': this.svgCont_.width(),
+        'height': this.svgCont_.height(),
+    } );
+
+}
+//tranform origin
+transformIt.tOrigin = function(){
+  var x,y,
+      l='left',
+      r='right',
+      t='top',
+      b='bottom';
+  if(transform.rot.x == 0 && transform.rot.y == 0){
+    x = l;
+    y = b;
+  }
+  else if(transform.rot.x == 180 && transform.rot.y == 180){
+    x = r;
+    y = t;
+  }
+  else if(transform.rot.x == 180 && transform.rot.y == 0){
+    x = l;
+    y = t;
+  }
+  else if(transform.rot.x == 0 && transform.rot.y ==180 ){
+    x = r;
+    y = b;
+  }
+
+  return {
+    x: x,
+    y: y
+  }
+}
+
+//RESIZE CONTAINER
+function resizeFib(svgCont, transCont, val){
+    fibCont.width(val);
+    transCont.css({
+        'width': $fibCont.width(),
+        'height': $fibCont.height(),
+    } );
+
+}
+
+
+    var $fibCont = $('#fib-cont'),
+        $fibSvg = $('#fib-svg'),
+        $fibPath = $('#fib-cont path, #fib-cont use'),
+        $flipV = $('#flipV'),
+        $flipH = $('#flipH'),
+        $rotate = $('#rotate'),
+        $hideFib = $('#hideFib'),
+        $sizeFib = $('#sizeFib'),
+        $transCont = $('#translate-container'),
+        $lock = $('#lock');
+
+var tranformFib= new transformIt($fibSvg, $fibCont, $transCont );
 
 
 
-
-
-
-    //use this obj to store transforms values
-    var transform = {
-        rot: { z: 0, y:0, x:0},
-        trans: {x:0, y:0}
-    };
+//ON READY
+$(function(){
+    $(document).foundation();
+    var $fibCont = $('#fib-cont'),
+        $fibSvg = $('#fib-svg'),
+        $fibPath = $('#fib-cont path, #fib-cont use'),
+        $flipV = $('#flipV'),
+        $flipH = $('#flipH'),
+        $rotate = $('#rotate'),
+        $hideFib = $('#hideFib'),
+        $sizeFib = $('#sizeFib'),
+        $transCont = $('#translate-container'),
+        $lock = $('#lock');
 
 
 
     //CLICKS AND CHANGES
-
+    /*/
     $flipV.on('click', function(e){
         transform.rot.x = ( transform.rot.x==0 ? 180 : 0 );
         transformIt();
@@ -193,14 +271,16 @@ $(function(){
     });
 
 
+    //*/
+
     //locking stuff
     var locked = false;
     $lock.on('click', function(e){
 
         if(locked === false){
 
-            Math.sqrt( (width()*.382),6;
-
+            //Math.sqrt( (width()*.382),6;
+            //first squaer
 
             var sw = new google.maps.Point(
                 $transCont.position().left ,
@@ -241,66 +321,6 @@ $(function(){
 
 
 
-
-    function resizeFib(val){
-        $fibCont.width(val);
-        $transCont.css({
-            'width': $fibCont.width(),
-            'height': $fibCont.height(),
-        } );
-
-    }
-
-    function tOrigin(){
-      var x,y,
-          l='left',
-          r='right',
-          t='top',
-          b='bottom';
-      if(transform.rot.x == 0 && transform.rot.y == 0){
-        x = l;
-        y = b;
-      }
-      else if(transform.rot.x == 180 && transform.rot.y == 180){
-        x = r;
-        y = t;
-      }
-      else if(transform.rot.x == 180 && transform.rot.y == 0){
-        x = l;
-        y = t;
-      }
-      else if(transform.rot.x == 0 && transform.rot.y ==180 ){
-        x = r;
-        y = b;
-      }
-
-      return {
-        x: x,
-        y: y
-      }
-    }
-
-
-    function transformIt(){
-
-        var origin = tOrigin();
-
-        $fibSvg.css('transform', 'rotateX(' +transform.rot.x+ 'deg) rotateY(' +transform.rot.y+ 'deg)');
-
-        $fibCont.css({
-          'transform': 'rotateZ(' +transform.rot.z+ 'deg)',// translate(' + transform.trans.x + 'px, ' + transform.trans.y + 'px)',
-          'transform-origin': tOrigin().x+' '+tOrigin().y
-        });
-
-        $transCont.css({
-            'transform': 'translate(' + transform.trans.x + 'px, ' + transform.trans.y + 'px)',
-            'width': $fibCont.width(),
-            'height': $fibCont.height(),
-        } );
-
-    }
-
-  //colors
 
 
 });
