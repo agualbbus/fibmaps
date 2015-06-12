@@ -8,6 +8,7 @@ function fibOverlay(elem, map, bounds) {
   //this.elem_.id = "cloned-fib";
   this.map_ = map;
   this.position_ =  map.getCenter();
+  console.log('overlay pos is',this.position_);
 
   // Define a property to hold the image's div. We'll
   // actually create this div upon receipt of the onAdd()
@@ -50,45 +51,34 @@ fibOverlay.prototype.onAdd = function() {
       div,
       'mousedown',
       function(e){
-        this.style.cursor = 'move';
-        that.map_.set('draggable',false);
-        that.origin_ = e;
+        if (window.lockedFib !== true){
+            this.style.cursor = 'move';
+            that.map_.set('draggable',false);
+            that.origin_ = e;
 
-        that.moveHandler  = google.maps.event.addDomListener(
-          that.map_.getDiv(),
-          'mousemove',
-          function(e){
-            var origin = that.origin_,
-                proj = that.getProjection(),
-                left   = origin.clientX-e.clientX,
-                top    = origin.clientY-e.clientY,
-                //the position
-                pos    = proj.fromLatLngToDivPixel(that.position_),
-                latLngPos = proj.fromDivPixelToLatLng( new google.maps.Point(pos.x-left, pos.y-top) ),
+            that.moveHandler  = google.maps.event.addDomListener(
+              that.map_.getDiv(),
+              'mousemove',
+              function(e){
+                    var origin = that.origin_,
+                        proj = that.getProjection(),
+                        left   = origin.clientX-e.clientX,
+                        top    = origin.clientY-e.clientY,
+                        //the position
+                        pos    = proj.fromLatLngToDivPixel(that.position_),
+                        latLngPos = proj.fromDivPixelToLatLng( new google.maps.Point(pos.x-left, pos.y-top) );
 
-                //set the new bounds
-                sw = proj.fromDivPixelToLatLng(
-                    new google.maps.Point(
-                        pos.x-left,
-                        (pos.y-top) + div.offsetHeight
-                    )
-                ),
+                    that.position_ = latLngPos;
 
-                ne = proj.fromDivPixelToLatLng(
-                    new google.maps.Point(
-                        pos.x-left + div.offsetWidth,
-                        (pos.y-top)
-                    )
-                );
+                    that.origin_ = e;
+                    that.setNewBounds(pos.x-left, pos.y-top);
+                    //that.bounds_ =  new google.maps.LatLngBounds(sw, ne);
+                    that.draw();
+                    console.log('drawed in drag')
 
-
-                that.origin_ = e;
-                that.position_ = latLngPos;
-                that.bounds_ =  new google.maps.LatLngBounds(sw, ne);
-                that.draw();
-                console.log('drawed in drag')
-            });
-        }
+           });
+         }
+      }
   );
 
 
@@ -102,6 +92,33 @@ fibOverlay.prototype.onAdd = function() {
   this.getPanes().floatPane.appendChild(div);
 
 };
+
+fibOverlay.prototype.setNewBounds = function(left, top) {
+
+
+
+    var div  = this.div_,
+        proj = this.getProjection(),
+        pos  = proj.fromLatLngToDivPixel(this.position_),
+        left = left || pos.x,
+        top  = top ||  pos.y,
+
+        sw = proj.fromDivPixelToLatLng(
+            new google.maps.Point(
+                left,
+                top + div.offsetHeight
+            )
+        ),
+
+        ne = proj.fromDivPixelToLatLng(
+            new google.maps.Point(
+                left + div.offsetWidth,
+                top
+            )
+        );
+
+    this.bounds_ =  new google.maps.LatLngBounds(sw, ne);
+}
 
 fibOverlay.prototype.draw = function() {
   // */

@@ -9,10 +9,9 @@
 
         <link rel="apple-touch-icon" href="apple-touch-icon.png">
         <!-- Place favicon.ico in the root directory -->
-
-        <link rel="stylesheet" href="src/css/normalize.css">
-        <link rel="stylesheet" href="src/css/foundation.css">
-        <link rel="stylesheet" href="src/css/spectrum.css">
+        <link rel="stylesheet" href="src/css/vendor/font-awesome.min.css">
+        <link rel="stylesheet" href="src/css/vendor/normalize.min.css">
+        <link rel="stylesheet" href="src/css/vendor/foundation.css">
         <link rel="stylesheet" href="src/css/style.css">
     </head>
     <body>
@@ -51,9 +50,7 @@
 
 
             <aside class="row" >
-                <div id="lock">
-                    lock
-                </div>
+
                 <div class="columns small-12 medium-3">
                   <label>Rotate</label>
                   <div class="range-slider" data-slider data-options="display_selector: #rotateVal; initial: 0; start: -180; end: 180;" id="rotate">
@@ -82,9 +79,15 @@
                     <button class="tiny" id="flipV">Flip V</button>
                     <button class="tiny" id="flipH">Flip H</button>
                 </div>
-                <div class="columns small-12 medium-3">
+                <div class="columns small-12 medium-2">
                     <label>Switch</label>
                     <button class="tiny" id="hideFib">Hide</button>
+                </div>
+                <div class="columns small-12 medium-1">
+                    <label>Lock</label>
+                    <button class="tiny" id="lock">
+                        <i class="fa fa-unlock"></i>
+                    </button>
                 </div>
 <!--
                 <div class="columns small-12 medium-2">

@@ -1,4 +1,5 @@
 //maps :AIzaSyBVbAsOk4aQc12Yll-7KazLzLnY1GkMRZY
+var lockedFib = false;
 
 if (typeof google !== "undefined"){
     var overlay;
@@ -21,6 +22,7 @@ if (typeof google !== "undefined"){
             browserSupportFlag = true;
             navigator.geolocation.getCurrentPosition(function(position) {
               initialLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+              console.log('initial loc is',initialLocation);
               map.setCenter(initialLocation);
             }, function() {
               handleNoGeolocation(browserSupportFlag);
@@ -51,6 +53,11 @@ if (typeof google !== "undefined"){
 
         overlay = new fibOverlay(fibDiv, map);
         //click event ltnr
+
+        google.maps.event.addListenerOnce(map, 'idle', function(){
+            overlay = new fibOverlay(fibDiv, map);
+        });
+
         google.maps.event.addListener(map, 'click', function(e){
             console.log(e.latLng);
         });
@@ -77,7 +84,8 @@ $(function(){
         $hideFib = $('#hideFib'),
         $sizeFib = $('#sizeFib'),
         $transCont = $('#translate-container'),
-        $lock = $('#lock');
+        $lock = $('#lock'),
+        $lockI = $lock.find('i');
 
 
         window.transcont = $transCont ;
@@ -93,66 +101,77 @@ $(function(){
         trans: {x:0, y:0}
     };
 
-
+    $lock.on('click', function(e) {
+        lockedFib = (lockedFib ? false : true);
+        $lockI.toggleClass('fa-lock');
+        $lockI.toggleClass('fa-unlock');
+    });
 
     //CLICKS AND CHANGES
 
     $flipV.on('click', function(e){
-        transform.rot.x = ( transform.rot.x==0 ? 180 : 0 );
-        transformIt();
+        if (lockedFib !== true)
+            transform.rot.x = ( transform.rot.x==0 ? 180 : 0 );
+            transformIt();
     });
 
     $flipH.on('click', function(e){
-        transform.rot.y = ( transform.rot.y==0 ? 180 : 0 );
-        transformIt();
+        if (lockedFib !== true)
+            transform.rot.y = ( transform.rot.y==0 ? 180 : 0 );
+            transformIt();
     });
 
     $hideFib.on('click', function(e){
-        $fibCont.toggleClass('disable');
-        $(this).html( ( $(this).html()=="Hide" ? "Show" : "Hide"  ) );
+        if (lockedFib !== true)
+            $fibCont.toggleClass('disable');
+            $(this).html( ( $(this).html()=="Hide" ? "Show" : "Hide"  ) );
     });
 
 
     $rotate.find('.inc').on('click',function(){
-        var val = parseFloat($rotate.attr('data-slider')) + .5;
-        $rotate.foundation('slider', 'set_value', val );
+        if (lockedFib !== true)
+            var val = parseFloat($rotate.attr('data-slider')) + .5;
+            $rotate.foundation('slider', 'set_value', val );
     });
 
     $rotate.find('.dec').on('click',function(){
-        var val = parseFloat($rotate.attr('data-slider')) - .5;
-        $rotate.foundation('slider', 'set_value', val );
+        if (lockedFib !== true)
+            var val = parseFloat($rotate.attr('data-slider')) - .5;
+            $rotate.foundation('slider', 'set_value', val );
     });
 
 
     $rotate.on('change.fndtn.slider', function(e){
-        var deg = parseFloat( $(this).attr('data-slider') );
-            //deg = per * 360 / 100 - 180;
-        transform.rot.z = deg;
-        transformIt();
+        if (lockedFib !== true)
+            var deg = parseFloat( $(this).attr('data-slider') );
+                //deg = per * 360 / 100 - 180;
+            transform.rot.z = deg;
+            transformIt();
     });
 
 
 
     $sizeFib.find('.inc').on('click',function(e){
-
-        var val = parseFloat($sizeFib.attr('data-slider')) + 0.2;
-        $sizeFib.foundation('slider', 'set_value', val );
+        if (lockedFib !== true)
+            var val = parseFloat($sizeFib.attr('data-slider')) + 0.2;
+            $sizeFib.foundation('slider', 'set_value', val );
 
     });
 
 
     $sizeFib.find('.dec').on('click',function(e){
-
-        var val = parseFloat($sizeFib.attr('data-slider')) - 0.2;
-        $sizeFib.foundation('slider', 'set_value', val );
+        if (lockedFib !== true)
+            var val = parseFloat($sizeFib.attr('data-slider')) - 0.2;
+            $sizeFib.foundation('slider', 'set_value', val );
 
     });
 
 
     $sizeFib.on('change.fndtn.slider', function(e){
-        var per = parseFloat( $(this).attr('data-slider') ),
-            size = per * ($(window).width() * 1.25) / 100;
-        resizeFib(size);
+        if (lockedFib !== true)
+            var per = parseFloat( $(this).attr('data-slider') ),
+                size = per * ($(window).width() * 1.25) / 100;
+            resizeFib(size);
     });
 
 
@@ -161,6 +180,11 @@ $(function(){
         $transCont.css({
             'width': val,
         } );
+        var proj = overlay.getProjection(),
+            pos  = proj.fromLatLngToDivPixel(overlay.position_);
+        console.log('resize is position',pos);
+        overlay.setNewBounds(pos.x, pos.y);
+        overlay.draw();
     }
 
     function tOrigin(){
