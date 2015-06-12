@@ -1,5 +1,6 @@
 //maps :AIzaSyBVbAsOk4aQc12Yll-7KazLzLnY1GkMRZY
-var lockedFib = false;
+var lockedFib = false,
+    canResize = true;
 
 if (typeof google !== "undefined"){
     var overlay;
@@ -58,10 +59,6 @@ if (typeof google !== "undefined"){
             overlay = new fibOverlay(fibDiv, map);
         });
 
-        google.maps.event.addListener(map, 'click', function(e){
-            console.log(e.latLng);
-        });
-
         mapDiv.appendChild(fibDiv);
     }
 
@@ -86,13 +83,6 @@ $(function(){
         $transCont = $('#translate-container'),
         $lock = $('#lock'),
         $lockI = $lock.find('i');
-
-
-        window.transcont = $transCont ;
-
-
-
-
 
 
     //use this obj to store transforms values
@@ -168,10 +158,11 @@ $(function(){
 
 
     $sizeFib.on('change.fndtn.slider', function(e){
-        if (lockedFib !== true)
+        if (lockedFib !== true && canResize === true){
             var per = parseFloat( $(this).attr('data-slider') ),
                 size = per * ($(window).width() * 1.25) / 100;
             resizeFib(size);
+        }
     });
 
 
@@ -232,7 +223,24 @@ $(function(){
 
     }
 
-  //colors
+    //
+    $(window).load(function(e){
+
+        google.maps.event.addListener(map, 'zoom_changed', function(e){
+            var val = ($transCont.width() * 100) / ($(window).width() * 1.25);
+            canResize = false;
+            $sizeFib.foundation('slider', 'set_value', val );
+            setTimeout(
+                function() {
+                    canResize = true;
+                },
+                500
+            );
+
+            console.log('zoom changed');
+        });
+
+    });
 
 
 });
