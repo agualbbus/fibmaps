@@ -12,6 +12,7 @@
   position: relative; }
 
 #translate-container {
+  display: none;
   position: absolute;
   z-index: 999;
   cursor: move;
@@ -32,7 +33,8 @@
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 999; }
+  z-index: 999;
+  display: none; }
   #fib-cont.dragging {
     cursor: move; }
   #fib-cont.disable {

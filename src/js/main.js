@@ -4,7 +4,7 @@ var lockedFib = false,
 
 if (typeof google !== "undefined"){
     var overlay;
-    var fibDiv = document.getElementById('translate-container');
+    var fibDiv = document.getElementById('fib-cont');
     var cataratas = new google.maps.LatLng(-25.665913, -54.448626);
     var initialLocation =  cataratas;
     var mapDiv = document.getElementById('map-canvas');
@@ -83,6 +83,13 @@ $(function(){
         $transCont = $('#translate-container'),
         $lock = $('#lock'),
         $lockI = $lock.find('i');
+
+
+
+    //HELP modal
+    //$('#helpModal').foundation('reveal', 'open');
+
+
 
 
     //use this obj to store transforms values
@@ -168,14 +175,16 @@ $(function(){
 
 
     function resizeFib(val){
-        $transCont.css({
-            'width': val,
-        } );
-        var proj = overlay.getProjection(),
-            pos  = proj.fromLatLngToDivPixel(overlay.position_);
-        console.log('resize is position',pos);
-        overlay.setNewBounds(pos.x, pos.y);
-        overlay.draw();
+      if (typeof overlay !== 'undefined' ){
+          $fibCont.css({
+              'width': val,
+          } );
+          var proj = overlay.getProjection(),
+              pos  = proj.fromLatLngToDivPixel(overlay.position_);
+          console.log('resize is position',pos);
+          overlay.setNewBounds(pos.x, pos.y);
+          overlay.draw();
+      }
     }
 
     function tOrigin(){
@@ -212,11 +221,11 @@ $(function(){
 
         var origin = tOrigin();
 
-        $fibSvg.css('transform', 'rotateX(' +transform.rot.x+ 'deg) rotateY(' +transform.rot.y+ 'deg)');
+        //$fibSvg.css('transform', 'rotateX(' +transform.rot.x+ 'deg) rotateY(' +transform.rot.y+ 'deg)');
 
         $fibCont.css({
-          'transform': 'rotateZ(' +transform.rot.z+ 'deg)',// translate(' + transform.trans.x + 'px, ' + transform.trans.y + 'px)',
-          'transform-origin': tOrigin().x+' '+tOrigin().y
+          'transform': 'rotateZ(' +transform.rot.z+ 'deg) rotateX(' +transform.rot.x+ 'deg) rotateY(' +transform.rot.y+ 'deg)', // translate(' + transform.trans.x + 'px, ' + transform.trans.y + 'px)',
+          'transform-origin': 'left bottom'//tOrigin().x+' '+tOrigin().y
         });
 
 

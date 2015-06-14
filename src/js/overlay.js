@@ -136,11 +136,12 @@ fibOverlay.prototype.draw = function() {
 
       var sw = proj.fromLatLngToDivPixel(this.bounds_.getSouthWest());
       var ne = proj.fromLatLngToDivPixel(this.bounds_.getNorthEast());
-      div.style.transform = 'initial';
+      //div.style.transform = 'initial';
       div.style.left = sw.x + 'px';
       div.style.top = ne.y + 'px';
       div.style.width = (ne.x - sw.x) + 'px';
-      div.style.height = (sw.y - ne.y) + 'px';
+      //div.style.height = (sw.y - ne.y) + 'px';
+
 
   }
   else{
@@ -149,7 +150,7 @@ fibOverlay.prototype.draw = function() {
       div.style.top = pos.y + 'px';
       console.log('position first time', pos);
   }
-
+  div.style.display = "block";
 
 };
 

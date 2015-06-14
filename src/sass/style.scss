@@ -17,7 +17,9 @@
 
 }
 
+
 #translate-container{
+    display: none;
     position: absolute;
     z-index: 999;
     cursor: move;
@@ -42,6 +44,7 @@
     left: 0;
     width: 100%;
     z-index: 999;
+    display: none;
     //resize: horizontal;
     //overflow: auto;
 
