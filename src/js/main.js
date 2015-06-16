@@ -1,6 +1,8 @@
 //maps :AIzaSyBVbAsOk4aQc12Yll-7KazLzLnY1GkMRZY
 var lockedFib = false,
-    canResize = true;
+    canResize = true,
+    resizeTotal = $(window).width(),
+    gmapsZoom = 13;
 
 if (typeof google !== "undefined"){
     var overlay;
@@ -10,7 +12,7 @@ if (typeof google !== "undefined"){
     var mapDiv = document.getElementById('map-canvas');
     var mapOptions = {
           center: initialLocation,//{ lat: -34.397, lng: 150.644},
-          zoom: 13,
+          zoom: gmapsZoom,
           panControl: true,
           rotateControl: true
     };
@@ -83,6 +85,7 @@ $(function(){
         $transCont = $('#translate-container'),
         $lock = $('#lock'),
         $lockI = $lock.find('i');
+
 
 
 
@@ -167,7 +170,8 @@ $(function(){
     $sizeFib.on('change.fndtn.slider', function(e){
         if (lockedFib !== true && canResize === true){
             var per = parseFloat( $(this).attr('data-slider') ),
-                size = per * ($(window).width() * 1.25) / 100;
+                size = per * (  resizeTotal ) / 100;
+            console.log(size,per, resizeTotal);
             resizeFib(size);
         }
     });
@@ -236,12 +240,20 @@ $(function(){
     $(window).load(function(e){
 
         google.maps.event.addListener(map, 'zoom_changed', function(e){
-            var val = ($transCont.width() * 100) / ($(window).width() * 1.25);
+            //var val = ($transCont.width() * 100) / ($(window).width() * 1.25);
             canResize = false;
-            $sizeFib.foundation('slider', 'set_value', val );
+            //$sizeFib.foundation('slider', 'set_value', val );
+
+            var newZoom = map.getZoom();
+            var per = 50//(newZoom < gmapsZoom ? 20 : 80 );
+
+            gmapsZoom = newZoom;
+            $sizeFib.foundation('slider', 'set_value', per );
+
             setTimeout(
                 function() {
                     canResize = true;
+                    resizeTotal = $fibCont.width()*2;
                 },
                 500
             );
