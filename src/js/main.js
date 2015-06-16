@@ -112,28 +112,32 @@ $(function(){
     //CLICKS AND CHANGES
 
     $flipV.on('click', function(e){
-        if (lockedFib !== true)
+        if (lockedFib !== true){
             transform.rot.x = ( transform.rot.x==0 ? 180 : 0 );
             transformIt();
+        }
     });
 
     $flipH.on('click', function(e){
-        if (lockedFib !== true)
+        if (lockedFib !== true){
             transform.rot.y = ( transform.rot.y==0 ? 180 : 0 );
             transformIt();
+        }
     });
 
     $hideFib.on('click', function(e){
-        if (lockedFib !== true)
+        if (lockedFib !== true){
             $fibCont.toggleClass('disable');
             $(this).html( ( $(this).html()=="Hide" ? "Show" : "Hide"  ) );
+        }
     });
 
 
     $rotate.find('.inc').on('click',function(){
-        if (lockedFib !== true)
+        if (lockedFib !== true){
             var val = parseFloat($rotate.attr('data-slider')) + .5;
             $rotate.foundation('slider', 'set_value', val );
+        }
     });
 
     $rotate.find('.dec').on('click',function(){
@@ -144,27 +148,30 @@ $(function(){
 
 
     $rotate.on('change.fndtn.slider', function(e){
-        if (lockedFib !== true)
+        if (lockedFib !== true){
             var deg = parseFloat( $(this).attr('data-slider') );
                 //deg = per * 360 / 100 - 180;
             transform.rot.z = deg;
             transformIt();
+        }
     });
 
 
 
     $sizeFib.find('.inc').on('click',function(e){
-        if (lockedFib !== true)
+        if (lockedFib !== true){
             var val = parseFloat($sizeFib.attr('data-slider')) + 0.2;
             $sizeFib.foundation('slider', 'set_value', val );
+        }
 
     });
 
 
     $sizeFib.find('.dec').on('click',function(e){
-        if (lockedFib !== true)
+        if (lockedFib !== true){
             var val = parseFloat($sizeFib.attr('data-slider')) - 0.2;
             $sizeFib.foundation('slider', 'set_value', val );
+        }
 
     });
 
