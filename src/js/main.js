@@ -1,4 +1,6 @@
 //maps :AIzaSyBVbAsOk4aQc12Yll-7KazLzLnY1GkMRZY
+'use strict';
+
 var lockedFib = false,
     canResize = true,
     resizeTotal = $(window).width(),
@@ -33,7 +35,7 @@ if (typeof google !== "undefined"){
         }
         // Browser doesn't support Geolocation
         else {
-            browserSupportFlag = false;
+            var browserSupportFlag = false;
             handleNoGeolocation(browserSupportFlag);
         }
 
@@ -245,7 +247,7 @@ $(function(){
             //$sizeFib.foundation('slider', 'set_value', val );
 
             var newZoom = map.getZoom();
-            var per = 50//(newZoom < gmapsZoom ? 20 : 80 );
+            var per = 50;//(newZoom < gmapsZoom ? 20 : 80 );
 
             gmapsZoom = newZoom;
             $sizeFib.foundation('slider', 'set_value', per );

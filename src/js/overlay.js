@@ -1,4 +1,6 @@
 /** @constructor */
+'use strict';
+
 function fibOverlay(elem, map, bounds) {
 
   // Initialize all properties.
