@@ -126,10 +126,8 @@ $(function(){
     });
 
     $hideFib.on('click', function(e){
-        if (lockedFib !== true){
-            $fibCont.toggleClass('disable');
-            $(this).html( ( $(this).html()=="Hide" ? "Show" : "Hide"  ) );
-        }
+        $fibCont.toggleClass('disable');
+        $(this).html( ( $(this).html()=="Hide" ? "Show" : "Hide"  ) );
     });
 
 

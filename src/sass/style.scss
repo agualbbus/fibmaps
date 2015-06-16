@@ -54,7 +54,8 @@
     }
 
     &.disable{
-        display: none;
+        display: none!important;
+
     }
 
     svg{

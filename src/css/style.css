@@ -38,7 +38,7 @@
   #fib-cont.dragging {
     cursor: move; }
   #fib-cont.disable {
-    display: none; }
+    display: none !important; }
   #fib-cont svg {
     stroke: #F50000;
     stroke-width: 0.4; }
