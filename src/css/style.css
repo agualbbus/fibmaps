@@ -80,3 +80,6 @@ aside {
   .range-slider > .dec {
     left: -21px;
     right: initial; }
+
+.range-slider-handle {
+  border: none; }

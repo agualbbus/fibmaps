@@ -80,7 +80,7 @@ gulp.task('css',function(){
 
 
 //replace task
-gulp.task('replace',['js'], function() {
+gulp.task('replace',['js','css'], function() {
 
   gulp.src('index.html')
     .pipe(htmlreplace({
@@ -90,6 +90,10 @@ gulp.task('replace',['js'], function() {
     .pipe(gulp.dest('./'));
 
 });
+
+
+gulp.task('build',['replace']);
+
 
 //default
 gulp.task('default',['sass','coffee']);
