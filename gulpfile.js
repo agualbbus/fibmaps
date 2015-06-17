@@ -8,6 +8,7 @@ var htmlreplace = require('gulp-html-replace');
 var concat = require('gulp-concat');
 var minify = require('gulp-minify');
 var ghtmlSrc = require('gulp-html-src');
+var minifyCss = require('gulp-minify-css');
 
 
 //coffee
@@ -64,6 +65,18 @@ gulp.task('js',function(){
         .pipe(minify())
         .pipe(gulp.dest('dist/js/'))
 });
+
+
+
+//css
+gulp.task('css',function(){
+    gulp.src('index.html')
+        .pipe(ghtmlSrc({ presets: 'css'}))
+        .pipe(concat('styles.min.css'))
+        .pipe(minifyCss())
+        .pipe(gulp.dest('dist/css/'))
+});
+
 
 
 //replace task
