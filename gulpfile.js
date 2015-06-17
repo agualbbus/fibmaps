@@ -5,6 +5,9 @@ var coffee = require('gulp-coffee');
 var watch = require('gulp-watch');
 var gutil = require('gutil');
 var htmlreplace = require('gulp-html-replace');
+var concat = require('gulp-concat');
+var minify = require('gulp-minify');
+var ghtmlSrc = require('gulp-html-src');
 
 
 //coffee
@@ -52,13 +55,24 @@ gulp.task('server', function() {
 });
 
 
+//js
+
+gulp.task('js',function(){
+    gulp.src('index.html')
+        .pipe(ghtmlSrc())
+        .pipe(concat('all.js'))
+        .pipe(minify())
+        .pipe(gulp.dest('dist/js/'))
+});
+
+
 //replace task
-gulp.task('replace', function() {
+gulp.task('replace',['js'], function() {
 
   gulp.src('index.html')
     .pipe(htmlreplace({
         'css': 'dist/css/styles.min.css',
-        'js': 'dist/js/all.min.js'
+        'js': 'dist/js/all-min.js'
     }))
     .pipe(gulp.dest('./'));
 
