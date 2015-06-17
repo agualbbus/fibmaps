@@ -4,6 +4,7 @@ var sass = require('gulp-sass');
 var coffee = require('gulp-coffee');
 var watch = require('gulp-watch');
 var gutil = require('gutil');
+var htmlreplace = require('gulp-html-replace');
 
 
 //coffee
@@ -51,7 +52,17 @@ gulp.task('server', function() {
 });
 
 
-//
+//replace task
+gulp.task('replace', function() {
+
+  gulp.src('index.html')
+    .pipe(htmlreplace({
+        'css': 'dist/css/styles.min.css',
+        'js': 'dist/js/all.min.js'
+    }))
+    .pipe(gulp.dest('./'));
+
+});
 
 //default
 gulp.task('default',['sass','coffee']);
