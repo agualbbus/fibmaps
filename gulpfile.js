@@ -9,6 +9,9 @@ var concat = require('gulp-concat');
 var minify = require('gulp-minify');
 var ghtmlSrc = require('gulp-html-src');
 var minifyCss = require('gulp-minify-css');
+var rev = require('gulp-rev');
+var revReplace = require('gulp-rev-replace');
+var filter = require('gulp-filter');
 
 
 //coffee
@@ -67,7 +70,6 @@ gulp.task('js',function(){
 });
 
 
-
 //css
 gulp.task('css',function(){
     gulp.src('index.html')
@@ -89,6 +91,28 @@ gulp.task('replace',['js','css'], function() {
     }))
     .pipe(gulp.dest('./'));
 
+});
+
+//revision
+gulp.task("rev", function() {
+  var jsFilter = filter("**/*.js");
+  var cssFilter = filter("**/*.css");
+
+  var userefAssets = useref.assets();
+
+  return gulp.src("index.html")
+    .pipe(userefAssets)      // Concatenate with gulp-useref
+    .pipe(jsFilter)
+    .pipe(minify())             // Minify any javascript sources
+    .pipe(jsFilter.restore())
+    .pipe(cssFilter)
+    .pipe(minifyCss())               // Minify any CSS sources
+    .pipe(cssFilter.restore())
+    .pipe(rev())                // Rename the concatenated files
+    .pipe(userefAssets.restore())
+    .pipe(useref())
+    .pipe(revReplace())         // Substitute in new filenames
+    .pipe(gulp.dest('./'));
 });
 
 
