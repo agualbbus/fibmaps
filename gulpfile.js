@@ -15,6 +15,7 @@ var rev = require('gulp-rev');
 var revReplace = require('gulp-rev-replace');
 var filter = require('gulp-filter');
 var rename = require('gulp-rename');
+var copy = require('gulp-copy')
 
 
 
@@ -63,39 +64,17 @@ gulp.task('server', function() {
 });
 
 
-//js
-
-gulp.task('js',function(){
-    gulp.src('index.html')
-        .pipe(ghtmlSrc())
-        .pipe(concat('all.js'))
-        .pipe(minify())
-        .pipe(gulp.dest('dist/js/'))
-});
-
-
-//css
-gulp.task('css',function(){
-    gulp.src('index.html')
-        .pipe(ghtmlSrc({ presets: 'css'}))
-        .pipe(concat('styles.min.css'))
-        .pipe(minifyCss())
-        .pipe(gulp.dest('dist/css/'))
-});
 
 
 
-//replace task
-gulp.task('replace',['js','css'], function() {
+//copy fonts
+gulp.task('fonts', function(){
 
-  gulp.src('index.html')
-    .pipe(htmlreplace({
-        'css': 'dist/css/styles.min.css',
-        'js': 'dist/js/all-min.js'
-    }))
-    .pipe(gulp.dest('./'));
+    return gulp.src('./src/css/fonts/*')
+    .pipe(copy('./dist',{prefix: 2  }))
 
 });
+
 
 //revision
 gulp.task("rev", function() {
@@ -122,7 +101,7 @@ gulp.task("rev", function() {
 });
 
 
-gulp.task('build',['replace']);
+gulp.task('build',['rev','fonts']);
 
 
 //default
