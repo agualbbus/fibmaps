@@ -4,17 +4,12 @@ var sass = require('gulp-sass');
 var coffee = require('gulp-coffee');
 var watch = require('gulp-watch');
 var gutil = require('gutil');
-var htmlreplace = require('gulp-html-replace');
-var concat = require('gulp-concat');
-var minify = require('gulp-minify');
-var ghtmlSrc = require('gulp-html-src');
 var minifyCss = require('gulp-minify-css');
 var uglify = require('gulp-uglify');
 var useref = require('gulp-useref');
 var rev = require('gulp-rev');
 var revReplace = require('gulp-rev-replace');
 var filter = require('gulp-filter');
-var rename = require('gulp-rename');
 var copy = require('gulp-copy')
 
 
