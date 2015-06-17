@@ -12,6 +12,7 @@ var minifyCss = require('gulp-minify-css');
 var rev = require('gulp-rev');
 var revReplace = require('gulp-rev-replace');
 var filter = require('gulp-filter');
+var rename = require('gulp-rename');
 
 
 //coffee
@@ -112,6 +113,7 @@ gulp.task("rev", function() {
     .pipe(userefAssets.restore())
     .pipe(useref())
     .pipe(revReplace())         // Substitute in new filenames
+    .pipe(rename('index.html'))
     .pipe(gulp.dest('./'));
 });
 
