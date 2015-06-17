@@ -92,7 +92,7 @@ $(function(){
 
 
     //HELP modal
-    //$('#helpModal').foundation('reveal', 'open');
+    $('#helpModal').foundation('reveal', 'open');
 
 
 
