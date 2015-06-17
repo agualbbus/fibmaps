@@ -9,10 +9,13 @@ var concat = require('gulp-concat');
 var minify = require('gulp-minify');
 var ghtmlSrc = require('gulp-html-src');
 var minifyCss = require('gulp-minify-css');
+var uglify = require('gulp-uglify');
+var useref = require('gulp-useref');
 var rev = require('gulp-rev');
 var revReplace = require('gulp-rev-replace');
 var filter = require('gulp-filter');
 var rename = require('gulp-rename');
+
 
 
 //coffee
@@ -101,10 +104,11 @@ gulp.task("rev", function() {
 
   var userefAssets = useref.assets();
 
-  return gulp.src("index.html")
+  return gulp.src("./index.html")
     .pipe(userefAssets)      // Concatenate with gulp-useref
     .pipe(jsFilter)
-    .pipe(minify())             // Minify any javascript sources
+    .pipe(uglify()).on('error', console.error.bind(console))
+    // Minify any javascript sources
     .pipe(jsFilter.restore())
     .pipe(cssFilter)
     .pipe(minifyCss())               // Minify any CSS sources
@@ -113,7 +117,7 @@ gulp.task("rev", function() {
     .pipe(userefAssets.restore())
     .pipe(useref())
     .pipe(revReplace())         // Substitute in new filenames
-    .pipe(rename('index.html'))
+    //.pipe(rename('index.html'))
     .pipe(gulp.dest('./'));
 });
 
