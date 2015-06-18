@@ -1,3 +1,6 @@
+@import 'compass/compass';
+@import 'compass/compass/functions';
+
 #body{
     color: #fff;
 }
@@ -72,23 +75,29 @@
 }
 
 aside{
-  width: 67% !important;
-  max-width: 700px!important;
+  width: 70% !important;
+  max-width: 960px!important;
   background-color: #40CFA9;
   position: fixed;
   bottom: 0;
   right: 0%;
   z-index: 2;
   button{
-    margin-top: 10px;
+    margin-top: 3px;
+    margin-bottom: 12px;
+  }
+  label{
+    color: #444444;
+    //text-shadow: 1px 1px 1px #FFF;
   }
 }
 
 $MP-off :-21px;
 .range-slider{
-      width: 85%;
-      margin-left: auto;
-      margin-right: auto;
+    width: 85%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 11px;
     > .manual{
       text-align: center;
       display: block;
@@ -116,4 +125,7 @@ $MP-off :-21px;
 }
 .range-slider-handle{
     border: none;
+}
+.inline-flex{
+    display: inline-flex;
 }

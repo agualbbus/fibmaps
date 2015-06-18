@@ -1,3 +1,27 @@
+/*
+ * A partial implementation of the Ruby list functions from Compass:
+ * https://github.com/Compass/compass/blob/stable/lib/compass/sass_extensions/functions/lists.rb
+ */
+/*
+ * A partial implementation of the Ruby constants functions from Compass:
+ * https://github.com/Compass/compass/blob/stable/lib/compass/sass_extensions/functions/constants.rb
+ */
+/*
+ * A partial implementation of the Ruby display functions from Compass:
+ * https://github.com/Compass/compass/blob/stable/core/lib/compass/core/sass_extensions/functions/display.rb
+ */
+/*
+ * A partial implementation of the Ruby list functions from Compass:
+ * https://github.com/Compass/compass/blob/stable/lib/compass/sass_extensions/functions/lists.rb
+ */
+/*
+ * A partial implementation of the Ruby constants functions from Compass:
+ * https://github.com/Compass/compass/blob/stable/lib/compass/sass_extensions/functions/constants.rb
+ */
+/*
+ * A partial implementation of the Ruby display functions from Compass:
+ * https://github.com/Compass/compass/blob/stable/core/lib/compass/core/sass_extensions/functions/display.rb
+ */
 #body {
   color: #fff; }
 
@@ -49,20 +73,24 @@
     fill: none; }
 
 aside {
-  width: 67% !important;
-  max-width: 700px !important;
+  width: 70% !important;
+  max-width: 960px !important;
   background-color: #40CFA9;
   position: fixed;
   bottom: 0;
   right: 0%;
   z-index: 2; }
   aside button {
-    margin-top: 10px; }
+    margin-top: 3px;
+    margin-bottom: 12px; }
+  aside label {
+    color: #444444; }
 
 .range-slider {
   width: 85%;
   margin-left: auto;
-  margin-right: auto; }
+  margin-right: auto;
+  margin-top: 11px; }
   .range-slider > .manual {
     text-align: center;
     display: block;
@@ -83,3 +111,6 @@ aside {
 
 .range-slider-handle {
   border: none; }
+
+.inline-flex {
+  display: inline-flex; }

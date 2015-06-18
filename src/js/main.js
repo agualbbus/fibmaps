@@ -86,7 +86,8 @@ $(function(){
         $sizeFib = $('#sizeFib'),
         $transCont = $('#translate-container'),
         $lock = $('#lock'),
-        $lockI = $lock.find('i');
+        $lockI = $lock.find('i'),
+        $multiplySize = $('#sizeMultiply');
 
 
 
@@ -176,14 +177,23 @@ $(function(){
 
     $sizeFib.on('change.fndtn.slider', function(e){
         if (lockedFib !== true && canResize === true){
-            var per = parseFloat( $(this).attr('data-slider') ),
-                size = per * (  resizeTotal ) / 100;
+            var per = parseFloat( $(this).attr('data-slider') );
+            per = ( per <= 6 ? 6 : per );//if percntage is 0 is not valid!
+            var size = per * (  resizeTotal ) / 100;
+
             console.log(size,per, resizeTotal);
             resizeFib(size);
         }
     });
 
-
+    $multiplySize.on('click', function(){
+        if (lockedFib !== true && canResize === true){
+            var resize = $fibCont.width()*2;
+            resizeTotal = resize*2;
+            resizeFib(resize);
+            $sizeFib.foundation('slider', 'set_value', 50 );
+        }
+    });
 
     function resizeFib(val){
       if (typeof overlay !== 'undefined' ){

@@ -52,44 +52,66 @@
 
             <aside class="row" >
 
-                <div class="columns small-12 medium-3">
-                  <label>Rotate</label>
-                  <div class="range-slider" data-slider data-options="display_selector: #rotateVal; initial: 0; start: -180; end: 180;" id="rotate">
-                    <span class="range-slider-handle" role="slider" tabindex="0"></span>
-                    <span class="range-slider-active-segment"></span>
-                    <input type="hidden" id="rotateVal">
-                    <button class="manual dec">-</button>
-                    <button class="manual inc">+</button>
-                  </div>
+                <div class="columns small-6">
+                    <div class="columns small-12 medium-4">
+                        <div class="columns small-12 ">
+                              <label>Rotate</label>
+                              <div class="range-slider" data-slider data-options="display_selector: #rotateVal; initial: 0; start: -180; end: 180;" id="rotate">
+                                <span class="range-slider-handle" role="slider" tabindex="0"></span>
+                                <span class="range-slider-active-segment"></span>
+                                <input type="hidden" id="rotateVal">
+                                <button class="manual dec">-</button>
+                                <button class="manual inc">+</button>
+                              </div>
+                        </div>
+                    </div>
+                    <div class="columns small-12 medium-8">
+                        <div class="columns small-12 medium-8">
+                              <label>Size</label>
+                              <div class="range-slider" data-slider data-options="display_selector: #sizeVal; initial: 50;" id="sizeFib">
+                                <span class="range-slider-handle" role="slider" tabindex="0"></span>
+                                <span class="range-slider-active-segment"></span>
+                                <input type="hidden" id="sizeVal">
+                                <button class="manual dec">-</button>
+                                <button class="manual inc">+</button>
+                              </div>
+                        </div>
+                        <div class="columns small-12 medium-4">
+                            <label>Size X</label>
+                            <button class="tiny " id="sizeMultiply">X2</button>
+                        </div>
+                    </div>
+<!--
+                    <div class="columns medium-2">
+                        <label>Size X</label>
+                        <button class="tiny" id="sizeMultiply">X2</button>
+                    </div>
+-->
+
                 </div>
-                <div class="columns small-12 medium-3">
-                  <label>Size</label>
-                  <div class="range-slider" data-slider data-options="display_selector: #sizeVal; initial: 25;" id="sizeFib">
-                    <span class="range-slider-handle" role="slider" tabindex="0"></span>
-                    <span class="range-slider-active-segment"></span>
-                    <input type="hidden" id="sizeVal">
-                    <button class="manual dec">-</button>
-                    <button class="manual inc">+</button>
-                  </div>
+
+                <div class="columns small-6">
+                    <div class="columns small-12 medium-5">
+                        <label>Flip</label>
+                        <button class="tiny inline-flex" id="flipV">Flip V</button>
+                        <button class="tiny inline-flex" id="flipH">Flip H</button>
+                    </div>
+                    <div class="columns small-12 medium-3">
+                        <label>Switch</label>
+                        <button class="tiny" id="hideFib">Hide</button>
+                    </div>
+                    <div class="columns small-12 medium-4">
+                        <label>Lock</label>
+                        <button class="tiny" id="lock">
+                            <i class="fa fa-unlock"></i>
+                        </button>
+                    </div>
                 </div>
 
 
 
-                <div class="columns small-12 medium-3">
-                    <label>Flip</label>
-                    <button class="tiny" id="flipV">Flip V</button>
-                    <button class="tiny" id="flipH">Flip H</button>
-                </div>
-                <div class="columns small-12 medium-2">
-                    <label>Switch</label>
-                    <button class="tiny" id="hideFib">Hide</button>
-                </div>
-                <div class="columns small-12 medium-1">
-                    <label>Lock</label>
-                    <button class="tiny" id="lock">
-                        <i class="fa fa-unlock"></i>
-                    </button>
-                </div>
+
+
 
             </aside>
             <article id="helpModal" class="reveal-modal" data-reveal aria-labelledby="firstModalTitle" aria-hidden="true" role="dialog">
