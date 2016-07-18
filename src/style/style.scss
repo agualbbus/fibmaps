@@ -1,0 +1,177 @@
+//
+// #body{
+//     color: #fff;
+// }
+//
+//
+// #main-content{
+//   height: 100%;
+//   position: fixed;
+//   width: 100%;
+// }
+//
+//
+// #map-canvas {
+//   width: 100%;
+//   height: 100%;
+//   position: relative;
+//
+// }
+//
+//
+// #translate-container{
+//     display: none;
+//     position: absolute;
+//     z-index: 999;
+//     cursor: move;
+//     width: 500px;
+//     &.dragging{
+//         z-index: 9999;
+//     }
+//     &.hide{
+//         display: none;
+//     }
+// }
+//
+//
+// .fib-cont {
+//     background-color: transparent;
+//     position: absolute;
+//     top:0;
+//     left: 0;
+//     width: 350px;
+//     z-index: 999;
+//     display: none;
+//     //resize: horizontal;
+//     //overflow: auto;
+//
+//
+//     &.dragging{
+//         cursor: move;
+//     }
+//
+//     &.disable{
+//         display: none!important;
+//
+//     }
+//
+//     svg{
+//         stroke: #F50000;
+//         stroke-width: 0.4;
+//     }
+//     path {
+//         stroke: rgb(0, 168, 255);
+//         stroke-opacity: 1;
+//         stroke-width: 1.5;
+//         fill: none;
+//     }
+//
+// }
+//
+// aside{
+//   width: 70% !important;
+//   max-width: 960px!important;
+//   background-color: #40CFA9;
+//   position: fixed;
+//   bottom: 0;
+//   right: 0%;
+//   z-index: 2;
+//   height: 85px;
+// }
+//
+// .fib-panel{
+//   display: none;
+//   position: absolute;
+//   width: 100%;
+//   right: 0;
+//   bottom: 0;
+//   z-index: 3;
+//   background: transparent;
+//
+//   &.active{
+//     display: block;
+//   }
+//
+//   button{
+//     margin-top: 3px;
+//     margin-bottom: 12px;
+//   }
+//   label{
+//     color: #444444;
+//     //text-shadow: 1px 1px 1px #FFF;
+//   }
+// }
+//
+// #fib-panel{
+//     display: none;
+// }
+//
+// #addFib{
+//     position: absolute;
+//     right: 10px;
+//     top: -65px;
+// }
+//
+// .add-circle{
+//     position: absolute;
+//     margin: 0;
+//     padding: 0;
+//     @include border-radius(100px);
+//     height: 50px;
+//     width: 50px;
+//     text-align: center;
+//     color: #fff;
+//     @include box-shadow(2px 2px 6px -1px #3D3636);
+// }
+//
+// #fib-tabs-list{
+//     position: absolute;
+//     left: 0;
+//     top: -30px;
+//     height: 30px;
+//
+//     .fib-panel-tab{
+//         display: inline-block;
+//         float: left;
+//         height: 30px;
+//         background-color: aqua;
+//     }
+// }
+//
+//
+//
+// $MP-off :-21px;
+// .range-slider{
+//     width: 85%;
+//     margin-left: auto;
+//     margin-right: auto;
+//     margin-top: 11px;
+//     > .manual{
+//       text-align: center;
+//       display: block;
+//       padding: 0;
+//       margin: 0;
+//       width: 16px;
+//       height: 16px;
+//       position: absolute;
+//       top: -1px;
+//       font-weight: bold;
+//       cursor: pointer;
+//     }
+//     > .inc{
+//         right: $MP-off;
+//         left: initial;
+//     }
+//     > .dec{
+//         left: $MP-off;
+//         right: initial;
+//     }
+// }
+//
+//
+// .range-slider-handle{
+//     border: none;
+// }
+// .inline-flex{
+//     display: inline-flex;
+// }
