@@ -1,3 +1,3 @@
 import GoldenRectangulesModel from 'models/GoldenRectangulesModel';
 
-export const goldenRectangulesModel =  new GoldenRectangulesModel();
+export const goldenRectangulesModel = new GoldenRectangulesModel();

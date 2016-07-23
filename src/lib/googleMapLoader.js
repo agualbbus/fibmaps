@@ -1,29 +1,8 @@
-let $script_ = null;
-
-let loadPromise_;
-
-let resolveCustomPromise_;
-const _customPromise = new Promise(resolve => {
-  resolveCustomPromise_ = resolve;
-});
+const $script_ = require('scriptjs');
 
 // TODO add libraries language and other map options
 export default function googleMapLoader(bootstrapURLKeys) {
-  if (!$script_) {
-    $script_ = require('scriptjs'); // eslint-disable-line
-  }
-
-  // call from outside google-map-react
-  // will be as soon as loadPromise_ resolved
-  if (!bootstrapURLKeys) {
-    return _customPromise;
-  }
-
-  if (loadPromise_) {
-    return loadPromise_;
-  }
-
-  loadPromise_ = new Promise((resolve, reject) => {
+  const loadPromise_ = new Promise((resolve, reject) => {
     if (typeof window === 'undefined') {
       reject(new Error('google map cannot be loaded outside browser env'));
       return;
@@ -65,8 +44,6 @@ export default function googleMapLoader(bootstrapURLKeys) {
           reject(new Error('google map initialization error (not loaded)'))
     );
   });
-
-  resolveCustomPromise_(loadPromise_);
 
   return loadPromise_;
 }

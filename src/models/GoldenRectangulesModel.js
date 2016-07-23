@@ -1,7 +1,7 @@
 import { observable } from 'mobx';
-import rectaguleProps from 'constants/goldenRectaguleProps';
+import rectaguleProps from 'constants/goldenRectanguleProps';
 
-class GoldenRectanguleModel {
+class RectanguleModel {
   @observable rectangule = rectaguleProps;
 }
 
@@ -14,7 +14,7 @@ export class GoldenRectangulesModel {
   }
 
   addNewRectangule(maps) {
-    this.rectangules.push(new GoldenRectanguleModel(maps));
+    this.rectangules.push(new RectanguleModel(maps));
   }
 }
 export default GoldenRectangulesModel;

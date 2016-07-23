@@ -8,11 +8,9 @@ export default class GoldenRectangulesWrapper extends Component {
   render() {
     const rectangules = goldenRectangulesModel.rectangules.map((rect, key) => <GoldenRectangule key={key} model={rect} />);
     return (
-      rectangules
+      <div>
+        { rectangules }
+      </div>
     );
   }
 }
-
-GoldenRectangulesWrapper.propTypes = {
-  mapsDiv: React.PropTypes.object.isRequired,
-};

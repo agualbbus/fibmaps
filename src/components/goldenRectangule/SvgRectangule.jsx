@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import StyleSheet from 'react-style';
+import styler from 'react-styling';
 import { observer } from 'mobx-react';
 
 @observer
 export default class SvgRectangule extends Component {
   render() {
     return (
-      <div style=>
-        <svg version="1.2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="none" strokeLineCap="square" viewBox="-.01 -.01 1.64 1.02">
+      <div>
+        <svg style={styles.svg} version="1.2" fill="none" strokeLineCap="square" viewBox="-.01 -.01 1.64 1.02">
           <g id="l0" >
           <path d="M -1,0 A 1,1 0 0 1 0,-1" transform="translate(1,1)" vector-effect="non-scaling-stroke" strokeWidth="5" />
           <rect width="1" height="1" vector-effect="non-scaling-stroke" />
@@ -25,18 +25,11 @@ export default class SvgRectangule extends Component {
   }
 }
 
-const styles = StyleSheet.create({
-  svg: {
-      stroke: #F50000,
-      stroke-width: 0.4,
-  },
-  path: {
-      stroke: rgb(0, 168, 255),
-      stroke-opacity: 1,
-      stroke-width: 1.5,
-      fill: none,
-  }
-});
+const styles = styler `
+  svg
+    stroke: #F50000
+    stroke-width: 0.4
+`;
 
 
 SvgRectangule.propTypes = {
