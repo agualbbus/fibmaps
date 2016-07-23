@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Boilerplate for ReactJS project with hot code reloading",
   "scripts": {
-    "start": "node server.js",
+    "start": "./node_modules/.bin/webpack-dev-server --port 3000 --config ./webpack.config.babel.js --content-base dist/ --display-error-details --hot --inline",
     "lint": "eslint src"
   },
   "repository": {
@@ -71,7 +71,6 @@
     "postcss-loader": "^0.8.0",
     "precss": "^1.4.0",
     "raw-loader": "^0.5.1",
-    "react-addons-test-utils": "^0.14.7",
     "react-transform-catch-errors": "^1.0.2",
     "react-transform-hmr": "^1.0.2",
     "redbox-react": "^1.2.2",
@@ -92,7 +91,7 @@
     "mobx": "^2.3.7",
     "mobx-react": "^3.5.1",
     "react": "^15.2.1",
-    "react-dom": "^0.14.6",
-    "react-style": "^0.5.5"
+    "react-dom": "^15.2.1",
+    "react-styling": "^1.5.1"
   }
 }
