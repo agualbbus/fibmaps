@@ -6,7 +6,11 @@ import GoldenRectangule from 'components/goldenRectangule/GoldenRectangule';
 @observer
 export default class GoldenRectangulesWrapper extends Component {
   render() {
-    const rectangules = goldenRectangulesModel.rectangules.map((rect, key) => <GoldenRectangule key={key} model={rect} />);
+    const rectangules = goldenRectangulesModel.rectangules.map((rect, key) =>
+    <GoldenRectangule
+      key={key}
+      rectanguleModel={rect}
+    />);
     return (
       <div>
         { rectangules }

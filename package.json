@@ -58,7 +58,6 @@
     "eslint-plugin-react": "^4.1.0",
     "extract-text-webpack-plugin": "^0.8.2",
     "file-loader": "^0.9.0",
-    "foundation-sites-loader": "^1.0.1",
     "html-webpack-plugin": "^1.6.1",
     "jsdom": "^8.1.0",
     "localStorage": "^1.0.3",
@@ -88,10 +87,11 @@
   },
   "dependencies": {
     "foundation-sites": "^6.2.3",
+    "jquery": "^3.1.0",
     "mobx": "^2.3.7",
     "mobx-react": "^3.5.1",
     "react": "^15.2.1",
     "react-dom": "^15.2.1",
-    "react-styling": "^1.5.1"
+    "react-styling": "^1.5.1",
   }
 }
