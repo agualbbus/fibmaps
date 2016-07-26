@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { observer } from 'mobx-react';
+import radium from 'radium';
 import styler from 'react-styling';
 import SvgRectangule from 'components/goldenRectangule/SvgRectangule';
 import createOverlay from 'lib/googleMapsOverlayHandler';
 
+@radium
 @observer
 export default class GoldenRectangule extends Component {
   componentDidMount() {
@@ -12,8 +14,14 @@ export default class GoldenRectangule extends Component {
   }
 
   render() {
+    const { props, id } = this.props.rectanguleModel;
+    const transform = {
+      transform: `rotateZ(${props.trnfrm.rot.z}deg) rotateX(${props.trnfrm.rot.x}deg) rotateY(${props.trnfrm.rot.y}deg)`,
+      transformOrigin: 'left bottom',
+    };
+
     return (
-      <div style={styles.container} ref="container">
+      <div style={[styles.container, transform]} ref="container" className="GoldenRectangule" id={id}>
         <SvgRectangule />
       </div>
     );

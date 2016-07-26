@@ -1,22 +1,23 @@
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
+import FlipCtrl from 'components/controlsPanel/FlipCtrl';
+import ShowCtrl from 'components/controlsPanel/ShowCtrl';
+
 
 @observer
 export default class CtrlPanel extends Component {
   render() {
+    const model = this.props.rectanguleModel;
     return (
       <div>
         <div className="columns small-6">
         </div>
         <div className="columns small-6">
           <div className="columns small-12 medium-5">
-              <label>Flip</label>
-              <button className="tiny inline-flex flipV-control" >Flip V</button>
-              <button className="tiny inline-flex flipH-control" >Flip H</button>
+            <FlipCtrl model={model} />
           </div>
           <div className="columns small-12 medium-3">
-              <label>Switch</label>
-              <button className="tiny hide-control" id="hideFib">Hide</button>
+            <ShowCtrl model={model} />
           </div>
           <div className="columns small-12 medium-4">
               <label>Lock</label>
@@ -29,3 +30,7 @@ export default class CtrlPanel extends Component {
     );
   }
 }
+
+CtrlPanel.propTypes = {
+  rectanguleModel: React.PropTypes.object.isRequired,
+};

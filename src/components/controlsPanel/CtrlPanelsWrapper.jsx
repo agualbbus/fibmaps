@@ -8,7 +8,7 @@ import { goldenRectangulesModel } from 'models';
 @observer
 export default class CtrlPanelsWrapper extends Component {
   render() {
-    const panels = goldenRectangulesModel.rectangules.map((rec, key) => <CtrlPanel model={rec} key={key} />);
+    const panels = goldenRectangulesModel.rectangules.map((rec, key) => <CtrlPanel rectanguleModel={rec} key={key} />);
     return (
       <div style={styles.container}>
         { panels }
