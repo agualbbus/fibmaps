@@ -1,4 +1,4 @@
-import { observable, action } from 'mobx';
+import { observable, action, computed } from 'mobx';
 import rectaguleProps from 'constants/goldenRectanguleProps';
 import ramdomId from 'lib/randomId';
 
@@ -13,6 +13,10 @@ class RectanguleModel {
     if (axis === 'y') {
       this.props.trnfrm.rot.y = this.props.trnfrm.rot.y === 0 ? 180 : 0;
     }
+  }
+
+  @action rotateAction(value) {
+    this.props.trnfrm.rot.z = value;
   }
 }
 

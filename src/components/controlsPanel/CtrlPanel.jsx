@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { observer } from 'mobx-react';
 import FlipCtrl from 'components/controlsPanel/FlipCtrl';
 import ShowCtrl from 'components/controlsPanel/ShowCtrl';
+import RotateCtrl from 'components/controlsPanel/RotateCtrl';
 
 
 @observer
@@ -11,6 +12,11 @@ export default class CtrlPanel extends Component {
     return (
       <div>
         <div className="columns small-6">
+          <div className="columns small-12 medium-4">
+            <div className="columns small-12 ">
+              <RotateCtrl model={model} />
+            </div>
+          </div>
         </div>
         <div className="columns small-6">
           <div className="columns small-12 medium-5">

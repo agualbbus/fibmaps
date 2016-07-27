@@ -1,3 +1,5 @@
+$diameter: 15px;
+
 /**
  * Rangeslider
  */
@@ -27,7 +29,7 @@
  * Rangeslider - Horizontal slider
  */
 .rangeslider-horizontal {
-	height: 20px;
+	height: $diameter / 2;
 	border-radius: 10px;
 	.rangeslider__fill {
 		height: 100%;
@@ -36,9 +38,9 @@
 		top: 0;
 	}
 	.rangeslider__handle {
-		width: 40px;
-		height: 40px;
-		border-radius: 40px;
-		top: -10px;
+		width: $diameter;
+		height: $diameter;
+		border-radius: $diameter;
+		top: -3px;
 	}
 }
