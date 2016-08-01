@@ -3,6 +3,9 @@ import { observer } from 'mobx-react';
 import FlipCtrl from 'components/controlsPanel/FlipCtrl';
 import ShowCtrl from 'components/controlsPanel/ShowCtrl';
 import RotateCtrl from 'components/controlsPanel/RotateCtrl';
+import SizeCtrl from 'components/controlsPanel/SizeCtrl';
+import ScaleCtrl from 'components/controlsPanel/ScaleCtrl';
+import LockCtrl from 'components/controlsPanel/LockCtrl';
 
 
 @observer
@@ -10,26 +13,35 @@ export default class CtrlPanel extends Component {
   render() {
     const model = this.props.rectanguleModel;
     return (
-      <div>
-        <div className="columns small-6">
-          <div className="columns small-12 medium-4">
-            <div className="columns small-12 ">
-              <RotateCtrl model={model} />
+      <div className="row">
+        <div className="col-xs-6">
+          <div className="row">
+            <div className="col-xs-12 col-sm-4">
+              <div className="col-xs-12 ">
+                <RotateCtrl model={model} />
+              </div>
+            </div>
+            <div className="col-xs-12 col-sm-4">
+              <div className="col-xs-12 ">
+                <SizeCtrl model={model} />
+              </div>
+            </div>
+            <div className="col-xs-12 col-sm-4">
+              <div className="col-xs-12 ">
+                <ScaleCtrl model={model} />
+              </div>
             </div>
           </div>
         </div>
-        <div className="columns small-6">
-          <div className="columns small-12 medium-5">
+        <div className="col-xs-6">
+          <div className="col-xs-12 col-sm-5">
             <FlipCtrl model={model} />
           </div>
-          <div className="columns small-12 medium-3">
+          <div className="col-xs-12 col-sm-3">
             <ShowCtrl model={model} />
           </div>
-          <div className="columns small-12 medium-4">
-              <label>Lock</label>
-              <button className="tiny lock-control" >
-                  <i className="fa fa-unlock"></i>
-              </button>
+          <div className="col-xs-12 col-sm-4">
+            <LockCtrl model={model} />
           </div>
         </div>
       </div>

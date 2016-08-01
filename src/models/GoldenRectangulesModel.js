@@ -1,24 +1,5 @@
-import { observable, action, computed } from 'mobx';
-import rectaguleProps from 'constants/goldenRectanguleProps';
-import ramdomId from 'lib/randomId';
-
-class RectanguleModel {
-  @observable props = rectaguleProps;
-  static id = ramdomId();
-
-  @action flipAction(axis) {
-    if (axis === 'x') {
-      this.props.trnfrm.rot.x = this.props.trnfrm.rot.x === 0 ? 180 : 0;
-    }
-    if (axis === 'y') {
-      this.props.trnfrm.rot.y = this.props.trnfrm.rot.y === 0 ? 180 : 0;
-    }
-  }
-
-  @action rotateAction(value) {
-    this.props.trnfrm.rot.z = value;
-  }
-}
+import { observable, action } from 'mobx';
+import SingleRectanguleModel from 'models/SingleGoldenRectanguleModel';
 
 export class GoldenRectangulesModel {
   mapElement;
@@ -30,7 +11,7 @@ export class GoldenRectangulesModel {
 
   @action addNewRectangule() {
     console.log('added new rectangule mobx');
-    this.rectangules.push(new RectanguleModel());
+    this.rectangules.push(new SingleRectanguleModel());
   }
 
   @action addFirstRectangule() {

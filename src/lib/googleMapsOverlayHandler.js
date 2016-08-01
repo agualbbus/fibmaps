@@ -1,12 +1,11 @@
 import { goldenRectangulesModel } from 'models';
 import { mapModel } from 'models';
 
-function createOverlay(id, elem, bounds = null) {
+function createOverlay(id, elem, isLockedCallback, bounds = null) {
   const map = mapModel.mapInstance;
   const overlay = Object.assign(new window.google.maps.OverlayView(), {
     bounds,
     position: map.getCenter(),
-
     onAdd() {
       const that = this;
       elem.draggable = true;
@@ -23,7 +22,7 @@ function createOverlay(id, elem, bounds = null) {
           elem,
           'mousedown',
           function(e) { // eslint-disable-line
-            if (that.lockedFib !== true) {
+            if (isLockedCallback() === false) {
               this.style.cursor = 'move';
               map.set('draggable', false);
               that.origin = e;
@@ -39,7 +38,7 @@ function createOverlay(id, elem, bounds = null) {
                   const latLngPos = proj.fromDivPixelToLatLng(new window.google.maps.Point(pos.x-left, pos.y-top)); // eslint-disable-line
                   that.position = latLngPos;
                   that.origin = e;
-                  that.setNewBounds(pos.x-left, pos.y-top); // eslint-disable-line
+                  that.setNewBounds();
                   that.draw();
                 });
             }
@@ -51,6 +50,7 @@ function createOverlay(id, elem, bounds = null) {
         this.style.cursor = 'default';
         window.google.maps.event.removeListener(that.moveHandler);
       });
+
       this.getPanes().floatPane.appendChild(elem);
     },
 
@@ -80,22 +80,26 @@ function createOverlay(id, elem, bounds = null) {
 
     setNewBounds() {
       const proj = this.getProjection();
-      const pos = proj.fromLatLngToDivPixel(this.position);
-      const left = left || pos.x;
-      const top = top || pos.y;
-      const sw = proj.fromDivPixelToLatLng(new window.google.maps.Point(left, top + elem.offsetHeight));
-      const ne = proj.fromDivPixelToLatLng(new window.google.maps.Point(left + elem.offsetWidth, top));
+      const { x, y } = proj.fromLatLngToDivPixel(this.position);
+      const sw = proj.fromDivPixelToLatLng(new window.google.maps.Point(x, y + elem.offsetHeight));
+      const ne = proj.fromDivPixelToLatLng(new window.google.maps.Point(x + elem.offsetWidth, y));
       this.bounds = new window.google.maps.LatLngBounds(sw, ne);
     },
 
     onRemove() {
       goldenRectangulesModel.removeRectangule(id);
     },
+
+    resize() {
+      this.setNewBounds();
+      this.draw();
+    },
   });
 
   overlay.setMap(map);
   window.google.maps.event.addListener(map, 'idle', () => {
     overlay.draw();
+    overlay.setNewBounds();
   });
 
   return overlay;

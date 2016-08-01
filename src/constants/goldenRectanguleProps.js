@@ -1,3 +1,5 @@
+const initialSize = 300;
+
 const properties = {
   trnfrm: {
     rot: {
@@ -6,7 +8,12 @@ const properties = {
       z: 0,
     },
   },
-  canResize: true,
-  locked: true,
+  width: {
+    scale: initialSize,
+    percentage: 50,
+  },
+  show: true,
+  locked: false,
 };
+
 export default properties;

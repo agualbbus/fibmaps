@@ -4,24 +4,28 @@ import { observer } from 'mobx-react';
 import radium from 'radium';
 import styler from 'react-styling';
 import SvgRectangule from 'components/goldenRectangule/SvgRectangule';
-import createOverlay from 'lib/googleMapsOverlayHandler';
 
 @radium
 @observer
 export default class GoldenRectangule extends Component {
   componentDidMount() {
-    this.overlay = createOverlay(this.props.rectanguleModel.id, ReactDOM.findDOMNode(this.refs.container));
+    this.props.rectanguleModel.createOverlayAction(
+      this.props.rectanguleModel.id,
+      ReactDOM.findDOMNode(this.refs.container)
+    );
   }
 
   render() {
-    const { props, id } = this.props.rectanguleModel;
-    const transform = {
+    const { props, id, pixelsWidth } = this.props.rectanguleModel;
+    const dinamicStyles = {
       transform: `rotateZ(${props.trnfrm.rot.z}deg) rotateX(${props.trnfrm.rot.x}deg) rotateY(${props.trnfrm.rot.y}deg)`,
       transformOrigin: 'left bottom',
+      width: pixelsWidth,
+      visibility: props.show === true ? 'visible' : 'hidden',
     };
 
     return (
-      <div style={[styles.container, transform]} ref="container" className="GoldenRectangule" id={id}>
+      <div style={[styles.container, dinamicStyles]} ref="container" className="GoldenRectangule" id={id}>
         <SvgRectangule />
       </div>
     );

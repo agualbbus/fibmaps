@@ -9,10 +9,10 @@ export default class FlipCtrl extends Component {
 
   render() {
     return (
-      <div>
+      <div className="form-group">
         <label>Flip</label>
-        <button type="button" className="button tiny" onClick={this.handleClick.bind(this)} data-axis="x">Flip V</button>
-        <button type="button" className="button tiny" onClick={this.handleClick.bind(this)} data-axis="y">Flip H</button>
+        <button type="button" className="btn" onClick={this.handleClick.bind(this)} data-axis="x">Flip V</button>
+        <button type="button" className="btn" onClick={this.handleClick.bind(this)} data-axis="y">Flip H</button>
       </div>
     );
   }

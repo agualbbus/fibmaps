@@ -1,7 +1,8 @@
 require('./content/index.html');
 
 // Vendor
-import 'foundation-sites/dist/foundation.min.css';
+import 'bootstrap/dist/css/bootstrap.min';
+import 'font-awesome/css/font-awesome.min';
 import 'style/index';
 
 // ready to go
