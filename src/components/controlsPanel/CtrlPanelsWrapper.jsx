@@ -8,14 +8,31 @@ import { goldenRectangulesModel } from 'models';
 
 @observer
 export default class CtrlPanelsWrapper extends Component {
+
+  _handleAddRectangule() {
+    goldenRectangulesModel.addNewRectangule();
+  }
+
+  _handleTabClick(id) {
+    goldenRectangulesModel.setActivePanel(id);
+  }
+
+
   render() {
-    const panels = goldenRectangulesModel.rectangules.map((rec, key) => <CtrlPanel rectanguleModel={rec} key={key} />);
-    const tabs = goldenRectangulesModel.rectangules.map((rec, key) => <CtrlTab rectanguleModel={rec} key={key} />);
+    const panels = goldenRectangulesModel.rectangules.map(rec => <CtrlPanel rectanguleModel={rec} key={rec.id} />);
+
+    const tabs = goldenRectangulesModel.rectangules.map(rec => <CtrlTab
+      clickCallback={this._handleTabClick.bind(this, rec.id)}
+      rectanguleModel={rec}
+      styles={styles} // to do: specify active style and common separate
+      key={rec.id}
+    />);
+
     return (
       <div style={styles.container} id="controls-panel">
         <ul style={styles.tabslist}>
           { tabs }
-          <li style={styles.tabslist.li}>+ tab</li>
+          <li style={styles.tabslist.li} onClick={this._handleAddRectangule.bind(this)}>+ tab</li>
         </ul>
         { panels }
       </div>
@@ -46,14 +63,17 @@ const styles = styler `
 
     li
       list-style: none
-      background: #3c3c3a
+      background: rgba(82, 82, 82, 0.84)
       display: inline-block
       padding: 3px 5px 0
       height: 25px
       min-width: 84px
       text-align: center
-      border-top-left-radius: 3px
-      border-top-right-radius: 4px
-      border-bottom: 1px solid #5d5d5d
+      border-top-left-radius: 8px
+      border-top-right-radius: 8px
+      cursor: pointer
+
+      active
+        background: rgba(19, 19, 19, 0.811765);
 
 `;

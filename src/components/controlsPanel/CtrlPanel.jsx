@@ -12,7 +12,7 @@ import LockCtrl from 'components/controlsPanel/LockCtrl';
 export default class CtrlPanel extends Component {
   render() {
     const model = this.props.rectanguleModel;
-    return (
+    return model.isActiveInPanel ?
       <div className="row">
         <div className="col-xs-6">
           <div className="row">
@@ -45,7 +45,7 @@ export default class CtrlPanel extends Component {
           </div>
         </div>
       </div>
-    );
+    : null;
   }
 }
 

@@ -5,11 +5,13 @@ import createGmapsOverlay from 'lib/googleMapsOverlayHandler';
 
 
 class SingleRectanguleModel {
-  static id = ramdomId();
+  id = ramdomId();
 
   gmapsOverlay = null; // assigned later
 
-  @observable props = rectaguleProps;
+  @observable props = rectaguleProps();
+
+  @observable isActiveInPanel = false;
 
   @computed get pixelsWidth() {
     return this.props.width.percentage * this.props.width.scale / 100;
@@ -51,7 +53,7 @@ class SingleRectanguleModel {
       this.props.width.scale = this.props.width.scale / 2;
     }
     this.props.width.percentage = 50;
-    this.overlay.resize();
+    this.gmapsOverlay.resize();
   }
 
   @action visualizeAction() {
@@ -61,6 +63,10 @@ class SingleRectanguleModel {
 
   @action lockAction() {
     this.props.locked = !this.props.locked;
+  }
+
+  @action makeActiveInPanel(bool) {
+    this.isActiveInPanel = bool;
   }
 
 }

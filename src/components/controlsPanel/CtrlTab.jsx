@@ -1,32 +1,22 @@
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
-import styler from 'react-styling';
-
+import radium from 'radium';
 
 @observer
+@radium
 export default class CtrlTab extends Component {
   render() {
+    const styles = this.props.styles;
     const model = this.props.rectanguleModel;
+    const activeStyle = model.isActiveInPanel ? styles.tabslist.li.active : null;
     return (
-      <li style={styles.li}>Rectangule</li>
+      <li onClick={this.props.clickCallback} style={[styles.tabslist.li, activeStyle]}>Rectangule</li>
     );
   }
 }
 
 CtrlTab.propTypes = {
   rectanguleModel: React.PropTypes.object.isRequired,
+  clickCallback: React.PropTypes.func.isRequired,
+  styles: React.PropTypes.object.isRequired,
 };
-
-const styles = styler `
-  li
-    list-style: none
-    background: #3c3c3a
-    display: inline-block
-    padding: 3px 5px 0
-    height: 25px
-    min-width: 84px
-    text-align: center
-    border-top-left-radius: 3px
-    border-top-right-radius: 4px
-    border-bottom: 1px solid #5d5d5d
-`;
