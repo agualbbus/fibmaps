@@ -1,4 +1,4 @@
-import { observable, action } from 'mobx';
+import { observable, action, observe } from 'mobx';
 import SingleRectanguleModel from 'models/SingleGoldenRectanguleModel';
 
 export class GoldenRectangulesModel {
@@ -15,6 +15,13 @@ export class GoldenRectangulesModel {
     const rectangule = new SingleRectanguleModel();
     this.rectangules.push(rectangule);
     this.setActivePanel(rectangule.id);
+
+    // add observer to react to change in makeActive panel
+    observe(rectangule, (change) => {
+      if (change.object.isActiveInPanel === true) {
+        this.setActivePanel(change.object.id);
+      }
+    });
   }
 
   @action addFirstRectangule() {
@@ -24,9 +31,9 @@ export class GoldenRectangulesModel {
   }
 
   @action setActivePanel(id) {
+    // setActivePanel false for every panel exept for active
     this.rectangules.forEach((rec) => {
       if (rec.id === id) {
-        rec.makeActiveInPanel(true);
         return;
       }
       rec.makeActiveInPanel(false);

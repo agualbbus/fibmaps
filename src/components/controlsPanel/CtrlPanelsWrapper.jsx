@@ -13,18 +13,13 @@ export default class CtrlPanelsWrapper extends Component {
     goldenRectangulesModel.addNewRectangule();
   }
 
-  _handleTabClick(id) {
-    goldenRectangulesModel.setActivePanel(id);
-  }
-
-
   render() {
     const panels = goldenRectangulesModel.rectangules.map(rec => <CtrlPanel rectanguleModel={rec} key={rec.id} />);
 
     const tabs = goldenRectangulesModel.rectangules.map(rec => <CtrlTab
-      clickCallback={this._handleTabClick.bind(this, rec.id)}
       rectanguleModel={rec}
-      styles={styles} // to do: specify active style and common separate
+      liStyle={styles.tabslist.li}
+      liActiveStyle={styles.tabslist.li.active}
       key={rec.id}
     />);
 

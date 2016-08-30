@@ -11,7 +11,7 @@ class SingleRectanguleModel {
 
   @observable props = rectaguleProps();
 
-  @observable isActiveInPanel = false;
+  @observable isActiveInPanel = true;   // this is being obeserve by parent goldenRectangulesModel
 
   @computed get pixelsWidth() {
     return this.props.width.percentage * this.props.width.scale / 100;
@@ -23,7 +23,8 @@ class SingleRectanguleModel {
 
   @action createOverlayAction(id, elem) {
     const callback = () => this.isLocked;
-    this.gmapsOverlay = createGmapsOverlay(id, elem, callback);
+    const makeActiveCb = () => this.makeActiveInPanel(true);
+    this.gmapsOverlay = createGmapsOverlay(id, elem, callback, makeActiveCb);
   }
 
   @action flipAction(axis) {

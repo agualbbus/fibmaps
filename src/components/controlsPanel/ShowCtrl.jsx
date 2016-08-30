@@ -11,6 +11,7 @@ export default class ShowCtrl extends Component {
     return (
       <div>
         <label>Show</label>
+        <br />
         <button className="btn btn-sm" onClick={this.handleShow.bind(this)}>
         { this.props.model.props.show ? 'Hide' : 'show' }
         </button>
