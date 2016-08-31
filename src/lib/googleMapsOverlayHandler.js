@@ -1,10 +1,10 @@
 import { goldenRectangulesModel } from 'models';
 import { mapModel } from 'models';
 
-function createOverlay(id, elem, isLockedCallback, makeActiveCb, bounds = null) {
+function createOverlay(id, elem, options) {
   const map = mapModel.mapInstance;
   const overlay = Object.assign(new window.google.maps.OverlayView(), {
-    bounds,
+    bounds: null,
     position: map.getCenter(),
     onAdd() {
       const that = this;
@@ -22,8 +22,8 @@ function createOverlay(id, elem, isLockedCallback, makeActiveCb, bounds = null) 
           elem,
           'mousedown',
           function(e) { // eslint-disable-line
-            makeActiveCb();
-            if (isLockedCallback() === false) {
+            options.makeActiveCb();
+            if (options.isLockedCb() === false) {
               this.style.cursor = 'move';
               map.set('draggable', false);
               that.origin = e;

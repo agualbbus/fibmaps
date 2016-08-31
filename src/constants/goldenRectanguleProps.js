@@ -1,6 +1,6 @@
 const initialSize = 300;
 
-const properties = function () {
+const properties = () => {
   return {
     trnfrm: {
       rot: {
@@ -12,6 +12,16 @@ const properties = function () {
     width: {
       scale: initialSize,
       percentage: 50,
+    },
+    colors: {
+      spiral: {
+        rgb: {
+          r: 0,
+          g: 0,
+          b: 0,
+          a: 1,
+        },
+      },
     },
     show: true,
     locked: false,

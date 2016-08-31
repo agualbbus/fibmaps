@@ -22,9 +22,11 @@ class SingleRectanguleModel {
   }
 
   @action createOverlayAction(id, elem) {
-    const callback = () => this.isLocked;
-    const makeActiveCb = () => this.makeActiveInPanel(true);
-    this.gmapsOverlay = createGmapsOverlay(id, elem, callback, makeActiveCb);
+    this.gmapsOverlay = createGmapsOverlay(id, elem, {
+      isLockedCb: () => this.isLocked,
+      makeActiveCb: () => this.makeActiveInPanel(true),
+      onZoomCb: () => this.zoomReset(),
+    });
   }
 
   @action flipAction(axis) {
@@ -44,6 +46,7 @@ class SingleRectanguleModel {
   @action resizeAction(value) {
     if (this.isLocked) return;
     this.props.width.percentage = value;
+    this.gmapsOverlay.resize();
   }
 
   @action scaleAction(what) {
@@ -68,6 +71,10 @@ class SingleRectanguleModel {
 
   @action makeActiveInPanel(bool) {
     this.isActiveInPanel = bool;
+  }
+
+  @action changeColorAction(key, clr) {
+    this.props.colors[key] = clr;
   }
 
 }

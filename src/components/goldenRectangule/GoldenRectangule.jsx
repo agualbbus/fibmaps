@@ -27,7 +27,7 @@ export default class GoldenRectangule extends Component {
 
     return (
       <div style={[styles.container, dinamicStyles]} ref="container" className="GoldenRectangule" id={id}>
-        <SvgRectangule />
+        <SvgRectangule model={this.props.rectanguleModel} />
         { activeLayer }
       </div>
     );

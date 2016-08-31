@@ -43,8 +43,9 @@ const styles = styler `
     position: fixed
     bottom: 0
     right: 0%
+    padding-top: 8px
     z-index: 2
-    height: 85px
+    height: 95px
     border: 1px solid #ccc
     box-shadow: 10px 12px 12px 10px #b3b3b3
     background-color: rgba(19, 19, 19, 0.81)
