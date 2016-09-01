@@ -4,15 +4,30 @@ import makeRgbClr from 'lib/makeRgbClr';
 import styler from 'react-styling';
 import radium from 'radium';
 import { ChromePicker } from 'react-color';
+import $ from 'jquery';
 
 @observer
 @radium
 export default class ClrSetup extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       pickerActive: false,
     };
+
+    this.windowEventName = `click.${this.props.model.id}-${this.props.title}`;  // generate a unique  id ofr the event
+  }
+
+  componentDidMount() {
+    $(window).bind(this.windowEventName, this._handleClosePicker.bind(this));
+  }
+
+  componentWillUnmount() {
+    $(window).unbind(this.windowEventName);
+  }
+
+  _handleStopPropagation(e) {
+    e.stopPropagation();
   }
 
   _handleClickClr() {
@@ -33,7 +48,7 @@ export default class ClrSetup extends Component {
     const squareClrStyle = { background: makeRgbClr(this.props.defaultClr.rgb) };
 
     return (
-      <div style={styles.container}>
+      <div style={styles.container} onClick={this._handleStopPropagation.bind(this)} >
         { this.state.pickerActive ?
           <div style={styles.pickerContainer}>
             <span style={styles.close} onClick={this._handleClosePicker.bind(this)}>Close x</span>
@@ -87,6 +102,4 @@ const styles = styler `
 
   textContainer
     display: inline-flex
-
-
 `;

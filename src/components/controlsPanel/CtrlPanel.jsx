@@ -52,6 +52,7 @@ const styles = styler `
     padding: 0 10px
     display: inline-block
     float: left
+    color: #fff
 
   rotate
     width: 16%
