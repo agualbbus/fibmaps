@@ -4,9 +4,16 @@ import googleMapLoader from 'lib/googleMapLoader';
 import initMapConfig from 'constants/initMapConfig';
 import { goldenRectangulesModel, mapModel } from 'models';
 import GoogleMapDiv from 'components/GoogleMapDiv';
-
+import AddRectangulePrompt from 'components/controlsPanel/AddRectangulePrompt';
 
 export default class StartGoogleMaps extends Component {
+  constructor() {
+    super();
+    this.state = {
+      showModal: goldenRectangulesModel.rectangules.length === 0 || false,
+    };
+  }
+
   componentDidMount() {
     this._mapElement = ReactDOM.findDOMNode(this.refs.mapDiv);
     mapModel.mapInstance = this._mapElement;
@@ -38,15 +45,22 @@ export default class StartGoogleMaps extends Component {
     const config = initMapConfig(this._maps);
     const mapInstance = mapModel.mapInstance = new this._maps.Map(this._mapElement, config);
     this._handleGeolocation(mapInstance, config.center);
-    this._maps.event.addListener(mapInstance, 'idle', () => {
-      goldenRectangulesModel.addFirstRectangule();
-    });
+  }
+
+  _modalSubmit(recName) {
+    this.setState({ showModal: false });
+    goldenRectangulesModel.addNewRectangule(recName);
   }
 
   render() {
     return (
       <div>
         <GoogleMapDiv ref="mapDiv" />
+        <AddRectangulePrompt
+          showModal={this.state.showModal}
+          modalSubmit={this._modalSubmit.bind(this)}
+          title={'Add your first Golden Rectangule!'}
+        />
       </div>
     );
   }

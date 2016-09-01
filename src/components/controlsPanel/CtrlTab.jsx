@@ -6,13 +6,15 @@ import radium from 'radium';
 @radium
 export default class CtrlTab extends Component {
   _handleClickTab() {
-    this.props.rectanguleModel.makeActiveInPanel(true);
+    this.props.rectanguleModel.makeActiveAction(true);
   }
   render() {
     const model = this.props.rectanguleModel;
-    const activeStyle = model.isActiveInPanel ? this.props.liActiveStyle : null;
+    const activeStyle = model.isActive ? this.props.liActiveStyle : null;
     return (
-      <li onClick={this._handleClickTab.bind(this)} style={[this.props.liStyle, activeStyle]}>Rectangule</li>
+      <li onClick={this._handleClickTab.bind(this)} style={[this.props.liStyle, activeStyle]}>
+      {model.name}
+      </li>
     );
   }
 }

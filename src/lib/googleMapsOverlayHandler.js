@@ -3,53 +3,62 @@ import { mapModel } from 'models';
 
 function createOverlay(id, elem, options) {
   const map = mapModel.mapInstance;
-  const overlay = Object.assign(new window.google.maps.OverlayView(), {
+  const gMaps = window.google.maps;
+
+  const overlay = Object.assign(new gMaps.OverlayView(), {
     bounds: null,
     position: map.getCenter(),
+    isDraggable: false,
     onAdd() {
       const that = this;
       elem.draggable = true;
 
-      window.google.maps.event.addDomListener(
+      gMaps.event.addDomListener(
         map.getDiv(),
         'mouseleave',
         () => {
-          window.google.maps.event.trigger(elem, 'mouseup');
+          gMaps.event.trigger(elem, 'mouseup');
         }
       );
 
-      window.google.maps.event.addDomListener(
+      gMaps.event.addDomListener(
           elem,
           'mousedown',
           function(e) { // eslint-disable-line
             options.makeActiveCb();
-            if (options.isLockedCb() === false) {
+            if (!this.isDraggable && options.isActive() && options.isLockedCb() === false) {
               this.style.cursor = 'move';
               map.set('draggable', false);
               that.origin = e;
+              that.isDraggable = true;
 
-              that.moveHandler = window.google.maps.event.addDomListener(
+              that.moveHandler = gMaps.event.addDomListener(
                 map.getDiv(),
                 'mousemove',
                 function(e) { // eslint-disable-line
-                  const proj = that.getProjection();
-                  const left = that.origin.clientX-e.clientX; // eslint-disable-line
-                  const top = that.origin.clientY-e.clientY; // eslint-disable-line
-                  const pos = proj.fromLatLngToDivPixel(that.position);
-                  const latLngPos = proj.fromDivPixelToLatLng(new window.google.maps.Point(pos.x-left, pos.y-top)); // eslint-disable-line
-                  that.position = latLngPos;
-                  that.origin = e;
-                  that.setNewBounds();
-                  that.draw();
+                  if (that.isDraggable) {
+                    const proj = that.getProjection();
+                    const left = that.origin.clientX-e.clientX; // eslint-disable-line
+                    const top = that.origin.clientY-e.clientY; // eslint-disable-line
+                    const pos = proj.fromLatLngToDivPixel(that.position);
+                    const latLngPos = proj.fromDivPixelToLatLng(new gMaps.Point(pos.x-left, pos.y-top)); // eslint-disable-line
+                    that.position = latLngPos;
+                    that.origin = e;
+                    that.setNewBounds();
+                    that.draw();
+                  }
                 });
+            } else {
+              that.isDraggable = false;
             }
           }
       );
 
-      window.google.maps.event.addDomListener(elem, 'mouseup', function() { // eslint-disable-line
+      gMaps.event.addDomListener(elem, 'mouseup', function() { // eslint-disable-line
         map.set('draggable', true);
         this.style.cursor = 'default';
-        window.google.maps.event.removeListener(that.moveHandler);
+        gMaps.event.removeListener(that.moveHandler);
+        that.isDraggable = false;
       });
 
       this.getPanes().floatPane.appendChild(elem);
@@ -82,9 +91,9 @@ function createOverlay(id, elem, options) {
     setNewBounds() {
       const proj = this.getProjection();
       const { x, y } = proj.fromLatLngToDivPixel(this.position);
-      const sw = proj.fromDivPixelToLatLng(new window.google.maps.Point(x, y + elem.offsetHeight));
-      const ne = proj.fromDivPixelToLatLng(new window.google.maps.Point(x + elem.offsetWidth, y));
-      this.bounds = new window.google.maps.LatLngBounds(sw, ne);
+      const sw = proj.fromDivPixelToLatLng(new gMaps.Point(x, y + elem.offsetHeight));
+      const ne = proj.fromDivPixelToLatLng(new gMaps.Point(x + elem.offsetWidth, y));
+      this.bounds = new gMaps.LatLngBounds(sw, ne);
     },
 
     onRemove() {
@@ -98,7 +107,7 @@ function createOverlay(id, elem, options) {
   });
 
   overlay.setMap(map);
-  window.google.maps.event.addListener(map, 'idle', () => {
+  gMaps.event.addListener(map, 'idle', () => {
     overlay.draw();
     overlay.setNewBounds();
   });

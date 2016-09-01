@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import radium from 'radium';
 import { observer } from 'mobx-react';
-import makeRgbClr from 'lib/makeRgbClr';
 
 @observer
 @radium

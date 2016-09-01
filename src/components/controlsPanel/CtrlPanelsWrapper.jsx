@@ -1,16 +1,30 @@
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
 import styler from 'react-styling';
+import radium from 'radium';
 import CtrlPanel from 'components/controlsPanel/CtrlPanel';
 import CtrlTab from 'components/controlsPanel/CtrlTab';
 import { goldenRectangulesModel } from 'models';
-
+import AddRectangulePrompt from 'components/controlsPanel/AddRectangulePrompt';
 
 @observer
+@radium
 export default class CtrlPanelsWrapper extends Component {
 
+  constructor() {
+    super();
+    this.state = {
+      showModal: false,
+    };
+  }
+
   _handleAddRectangule() {
-    goldenRectangulesModel.addNewRectangule();
+    this.setState({ showModal: true });
+  }
+
+  _modalSubmit(recName) {
+    this.setState({ showModal: false });
+    goldenRectangulesModel.addNewRectangule(recName);
   }
 
   render() {
@@ -27,9 +41,14 @@ export default class CtrlPanelsWrapper extends Component {
       <div style={styles.container} id="controls-panel">
         <ul style={styles.tabslist}>
           { tabs }
-          <li style={styles.tabslist.li} onClick={this._handleAddRectangule.bind(this)}>+ tab</li>
+          <li style={[styles.tabslist.li, styles.tabslist.plusTab]} onClick={this._handleAddRectangule.bind(this)}>+</li>
         </ul>
         { panels }
+        <AddRectangulePrompt
+          showModal={this.state.showModal}
+          modalSubmit={this._modalSubmit.bind(this)}
+          title={'Add Golden Rectangule'}
+        />
       </div>
     );
   }
@@ -68,8 +87,12 @@ const styles = styler `
       border-top-left-radius: 8px
       border-top-right-radius: 8px
       cursor: pointer
+      color: #fff
 
       active
         background: rgba(19, 19, 19, 0.811765);
+
+    plusTab
+      min-width: 35px;
 
 `;

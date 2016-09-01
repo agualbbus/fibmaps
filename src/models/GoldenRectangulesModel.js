@@ -11,15 +11,15 @@ export class GoldenRectangulesModel {
     this.mapElement = element;
   }
 
-  @action addNewRectangule() {
-    const rectangule = new SingleRectanguleModel();
+  @action addNewRectangule(name) {
+    const rectangule = new SingleRectanguleModel(name);
     this.rectangules.push(rectangule);
-    this.setActivePanel(rectangule.id);
+    this.setActive(rectangule.id);
 
     // add observer to react to change in makeActive panel
     observe(rectangule, (change) => {
-      if (change.object.isActiveInPanel === true) {
-        this.setActivePanel(change.object.id);
+      if (change.object.isActive === true) {
+        this.setActive(change.object.id);
       }
     });
   }
@@ -30,13 +30,13 @@ export class GoldenRectangulesModel {
     }
   }
 
-  @action setActivePanel(id) {
-    // setActivePanel false for every panel exept for active
+  @action setActive(id) {
+    // setActive false for every panel exept for active
     this.rectangules.forEach((rec) => {
       if (rec.id === id) {
         return;
       }
-      rec.makeActiveInPanel(false);
+      rec.makeActiveAction(false);
     });
   }
 

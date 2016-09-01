@@ -5,13 +5,18 @@ import createGmapsOverlay from 'lib/googleMapsOverlayHandler';
 
 
 class SingleRectanguleModel {
+
+  constructor(name) {
+    this.name = name;
+  }
+
   id = ramdomId();
 
   gmapsOverlay = null; // assigned later
 
   @observable props = rectaguleProps();
 
-  @observable isActiveInPanel = true;   // this is being obeserve by parent goldenRectangulesModel
+  @observable isActive = true;   // this is being obeserved by parent goldenRectangulesModel
 
   @computed get pixelsWidth() {
     return this.props.width.percentage * this.props.width.scale / 100;
@@ -24,8 +29,9 @@ class SingleRectanguleModel {
   @action createOverlayAction(id, elem) {
     this.gmapsOverlay = createGmapsOverlay(id, elem, {
       isLockedCb: () => this.isLocked,
-      makeActiveCb: () => this.makeActiveInPanel(true),
+      makeActiveCb: () => this.makeActiveAction(true),
       onZoomCb: () => this.zoomReset(),
+      isActive: () => this.isActive,
     });
   }
 
@@ -69,8 +75,8 @@ class SingleRectanguleModel {
     this.props.locked = !this.props.locked;
   }
 
-  @action makeActiveInPanel(bool) {
-    this.isActiveInPanel = bool;
+  @action makeActiveAction(bool) {
+    this.isActive = bool;
   }
 
   @action changeColorAction(key, clr) {

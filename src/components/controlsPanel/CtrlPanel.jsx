@@ -15,7 +15,7 @@ import ClrCtrl from 'components/controlsPanel/ClrCtrl';
 export default class CtrlPanel extends Component {
   render() {
     const model = this.props.rectanguleModel;
-    return model.isActiveInPanel ?
+    return model.isActive ?
       <div >
         <div style={[styles.col, styles.rotate]}>
           <RotateCtrl model={model} />
