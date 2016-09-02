@@ -10,6 +10,10 @@ export default class ClrCtrl extends Component {
     this.props.model.changeColorAction('spiral', clr);
   }
 
+  _changeClrActiveLayerBorder(clr) {
+    this.props.model.changeColorAction('activeLayerBorder', clr);
+  }
+
   render() {
     const model = this.props.model;
     return (
@@ -22,6 +26,14 @@ export default class ClrCtrl extends Component {
               title={'Spiral'}
               defaultClr={model.props.colors.spiral}
               changeClrCb={this._changeClrSpiral.bind(this)}
+            />
+          </li>
+          <li style={styles.li}>
+            <ClrSetup
+              model={model}
+              title={'Active'}
+              defaultClr={model.props.colors.activeLayerBorder}
+              changeClrCb={this._changeClrActiveLayerBorder.bind(this)}
             />
           </li>
         </ul>

@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { observer } from 'mobx-react';
 import radium from 'radium';
 import styler from 'react-styling';
+import makeRgbClr from 'lib/makeRgbClr';
 import SvgRectangule from 'components/goldenRectangule/SvgRectangule';
 
 @radium
@@ -16,19 +17,21 @@ export default class GoldenRectangule extends Component {
   }
 
   render() {
-    const { props, id, pixelsWidth, isActiveInPanel } = this.props.rectanguleModel;
+    const { props, id, pixelsWidth, isActive } = this.props.rectanguleModel;
     const dinamicStyles = {
       transform: `rotateZ(${props.trnfrm.rot.z}deg) rotateX(${props.trnfrm.rot.x}deg) rotateY(${props.trnfrm.rot.y}deg)`,
       transformOrigin: 'left bottom',
       width: pixelsWidth,
       visibility: props.show === true ? 'visible' : 'hidden',
     };
-    const activeLayer = (<div style={isActiveInPanel ? styles.activeLayer : null} />);
+
+    const activeBorderClr = { borderColor: makeRgbClr(props.colors.activeLayerBorder.rgb) };
+    const activeLayer = (<div style={[styles.activeLayer, activeBorderClr]} />);
 
     return (
       <div style={[styles.container, dinamicStyles]} ref="container" className="GoldenRectangule" id={id}>
-        <SvgRectangule model={this.props.rectanguleModel} />
-        { activeLayer }
+        <SvgRectangule model={this.props.rectanguleModel} ref="svg" />
+        { isActive ? activeLayer : null }
       </div>
     );
   }
@@ -55,5 +58,6 @@ const styles = styler`
     top: -25%
     bottom: -25%
     right: -25%
-    border: 2px dashed rgb(223, 53, 66)
+    border-width: 2px
+    border-style: dashed
 `;

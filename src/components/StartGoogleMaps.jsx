@@ -1,18 +1,16 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import { observable } from 'mobx';
+import { observer } from 'mobx-react';
 import googleMapLoader from 'lib/googleMapLoader';
 import initMapConfig from 'constants/initMapConfig';
 import { goldenRectangulesModel, mapModel } from 'models';
 import GoogleMapDiv from 'components/GoogleMapDiv';
 import AddRectangulePrompt from 'components/controlsPanel/AddRectangulePrompt';
 
+@observer
 export default class StartGoogleMaps extends Component {
-  constructor() {
-    super();
-    this.state = {
-      showModal: goldenRectangulesModel.rectangules.length === 0 || false,
-    };
-  }
+
 
   componentDidMount() {
     this._mapElement = ReactDOM.findDOMNode(this.refs.mapDiv);
@@ -23,6 +21,8 @@ export default class StartGoogleMaps extends Component {
       this._initMapHandler();
     });
   }
+
+  @observable showModal = false;
 
   _handleGeolocation(mapInstance, initialLocation) {
     if (navigator.geolocation) {
@@ -45,10 +45,13 @@ export default class StartGoogleMaps extends Component {
     const config = initMapConfig(this._maps);
     const mapInstance = mapModel.mapInstance = new this._maps.Map(this._mapElement, config);
     this._handleGeolocation(mapInstance, config.center);
+    this._maps.event.addListener(mapInstance, 'idle', () => {
+      goldenRectangulesModel.recoverFromLs();
+    });
   }
 
   _modalSubmit(recName) {
-    this.setState({ showModal: false });
+    this.showModal = false;
     goldenRectangulesModel.addNewRectangule(recName);
   }
 
@@ -57,7 +60,7 @@ export default class StartGoogleMaps extends Component {
       <div>
         <GoogleMapDiv ref="mapDiv" />
         <AddRectangulePrompt
-          showModal={this.state.showModal}
+          showModal={this.showModal}
           modalSubmit={this._modalSubmit.bind(this)}
           title={'Add your first Golden Rectangule!'}
         />

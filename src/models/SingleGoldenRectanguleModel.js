@@ -6,17 +6,16 @@ import createGmapsOverlay from 'lib/googleMapsOverlayHandler';
 
 class SingleRectanguleModel {
 
-  constructor(name) {
-    this.name = name;
-  }
-
+  @observable props = null;
+  @observable isActive = true;   // this is being obeserved by parent goldenRectangulesModel
   id = ramdomId();
-
   gmapsOverlay = null; // assigned later
 
-  @observable props = rectaguleProps();
+  constructor(name, props) {
+    this.name = name;
+    this.props = props || rectaguleProps();
+  }
 
-  @observable isActive = true;   // this is being obeserved by parent goldenRectangulesModel
 
   @computed get pixelsWidth() {
     return this.props.width.percentage * this.props.width.scale / 100;

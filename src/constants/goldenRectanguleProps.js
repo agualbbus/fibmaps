@@ -22,6 +22,14 @@ const properties = () => {
           a: 1,
         },
       },
+      activeLayerBorder: {
+        rgb: {
+          r: 208,
+          g: 27,
+          b: 27,
+          a: 1,
+        },
+      },
     },
     show: true,
     locked: false,

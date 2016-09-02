@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
+import {observable} from "mobx"
 import styler from 'react-styling';
 import radium from 'radium';
 import CtrlPanel from 'components/controlsPanel/CtrlPanel';
@@ -10,21 +11,15 @@ import AddRectangulePrompt from 'components/controlsPanel/AddRectangulePrompt';
 @observer
 @radium
 export default class CtrlPanelsWrapper extends Component {
-
-  constructor() {
-    super();
-    this.state = {
-      showModal: false,
-    };
-  }
+  @observable showModal = false;
 
   _handleAddRectangule() {
-    this.setState({ showModal: true });
+    this.showModal = true;
   }
 
-  _modalSubmit(recName) {
-    this.setState({ showModal: false });
-    goldenRectangulesModel.addNewRectangule(recName);
+  _modalSubmit(name) {
+    this.showModal = false;
+    goldenRectangulesModel.addNewRectangule({ name });
   }
 
   render() {
@@ -45,7 +40,7 @@ export default class CtrlPanelsWrapper extends Component {
         </ul>
         { panels }
         <AddRectangulePrompt
-          showModal={this.state.showModal}
+          showModal={this.showModal}
           modalSubmit={this._modalSubmit.bind(this)}
           title={'Add Golden Rectangule'}
         />
