@@ -45,7 +45,7 @@ export default class StartGoogleMaps extends Component {
     const config = initMapConfig(this._maps);
     const mapInstance = mapModel.mapInstance = new this._maps.Map(this._mapElement, config);
     this._handleGeolocation(mapInstance, config.center);
-    this._maps.event.addListener(mapInstance, 'idle', () => {
+    this._maps.event.addListenerOnce(mapInstance, 'idle', () => {
       goldenRectangulesModel.recoverFromLs();
     });
   }

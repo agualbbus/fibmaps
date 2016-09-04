@@ -10,9 +10,9 @@ export class GoldenRectangulesModel {
   constructor() {
     /* Save rectangules data to localStorage */
     autorunAsync(() => {
-      const props = this.rectangulesProps;
-      if (props) {
-        storeDataToLocalStore('rectangules', toJS(props));
+      const params = this.rectangulesParameters;
+      if (params) {
+        storeDataToLocalStore('rectangules', toJS(params));
       }
     }, 500);
   }
@@ -21,7 +21,7 @@ export class GoldenRectangulesModel {
     this.mapElement = element;
   }
 
-  @computed get rectangulesProps() {
+  @computed get rectangulesParameters() {
     if (this.rectangules.length) {
       return this.rectangules.map(rec => {
         return {

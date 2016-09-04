@@ -1,14 +1,15 @@
 import { goldenRectangulesModel } from 'models';
 import { mapModel } from 'models';
 
-function createOverlay(id, elem, options) {
+function createOverlay(id, elem, position, callbacks) {
   const map = mapModel.mapInstance;
   const gMaps = window.google.maps;
 
   const overlay = Object.assign(new gMaps.OverlayView(), {
     bounds: null,
-    position: map.getCenter(),
+    position: position ? new gMaps.LatLng(position.lat, position.lng) : map.getCenter(), // intial position
     isDraggable: false,
+
     onAdd() {
       const that = this;
       elem.draggable = true;
@@ -25,8 +26,8 @@ function createOverlay(id, elem, options) {
           elem,
           'mousedown',
           function(e) { // eslint-disable-line
-            options.makeActiveCb();
-            if (!this.isDraggable && options.isActive() && options.isLockedCb() === false) {
+            callbacks.makeActiveCb();
+            if (!this.isDraggable && callbacks.isActive() && callbacks.isLockedCb() === false) {
               this.style.cursor = 'move';
               map.set('draggable', false);
               that.origin = e;
@@ -42,7 +43,7 @@ function createOverlay(id, elem, options) {
                     const top = that.origin.clientY-e.clientY; // eslint-disable-line
                     const pos = proj.fromLatLngToDivPixel(that.position);
                     const latLngPos = proj.fromDivPixelToLatLng(new gMaps.Point(pos.x-left, pos.y-top)); // eslint-disable-line
-                    that.position = latLngPos;
+                    that.position = callbacks.setNewPosition(latLngPos);
                     that.origin = e;
                     that.setNewBounds();
                     that.draw();
@@ -79,7 +80,6 @@ function createOverlay(id, elem, options) {
         elem.style.left = `${sw.x}px`;
         elem.style.top = `${ne.y}px`;
         elem.style.width = `${(ne.x - sw.x)}px`;
-        // console.log(position , elem.style.left , elem.style.top, elem.style.width  )
       } else {
         const pos = proj.fromLatLngToDivPixel(this.position);
         elem.style.left = `${pos.x}px`;

@@ -13,6 +13,7 @@ const properties = () => {
       scale: initialSize,
       percentage: 50,
     },
+    position: null,
     colors: {
       spiral: {
         rgb: {

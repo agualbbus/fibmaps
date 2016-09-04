@@ -6,10 +6,10 @@ import createGmapsOverlay from 'lib/googleMapsOverlayHandler';
 
 class SingleRectanguleModel {
 
-  @observable props = null;
+  @observable props = {}
   @observable isActive = true;   // this is being obeserved by parent goldenRectangulesModel
   id = ramdomId();
-  gmapsOverlay = null; // assigned later
+  gmapsOverlay = { position: null }; // assigned later
 
   constructor(name, props) {
     this.name = name;
@@ -26,11 +26,12 @@ class SingleRectanguleModel {
   }
 
   @action createOverlayAction(id, elem) {
-    this.gmapsOverlay = createGmapsOverlay(id, elem, {
+    this.gmapsOverlay = createGmapsOverlay(id, elem, this.props.position, {
       isLockedCb: () => this.isLocked,
       makeActiveCb: () => this.makeActiveAction(true),
       onZoomCb: () => this.zoomReset(),
       isActive: () => this.isActive,
+      setNewPosition: (position) => this.setNewPositionAction(position),
     });
   }
 
@@ -80,6 +81,15 @@ class SingleRectanguleModel {
 
   @action changeColorAction(key, clr) {
     this.props.colors[key] = clr;
+  }
+
+  @action setNewPositionAction(position) {
+    // save position as observable, but return original object to gmaps overlay
+    this.props.position = {
+      lat: position.lat(),
+      lng: position.lng(),
+    };
+    return position;
   }
 
 }
