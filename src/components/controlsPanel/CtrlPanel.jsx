@@ -9,6 +9,7 @@ import SizeCtrl from 'components/controlsPanel/SizeCtrl';
 import ScaleCtrl from 'components/controlsPanel/ScaleCtrl';
 import LockCtrl from 'components/controlsPanel/LockCtrl';
 import ClrCtrl from 'components/controlsPanel/ClrCtrl';
+import DelCtrl from 'components/controlsPanel/DelCtrl';
 
 @radium
 @observer
@@ -35,8 +36,11 @@ export default class CtrlPanel extends Component {
         <div style={[styles.col, styles.lock]}>
           <LockCtrl model={model} />
         </div>
-        <div style={[styles.col, styles.lock]}>
+        <div style={[styles.col, styles.clr]}>
           <ClrCtrl model={model} />
+        </div>
+        <div style={[styles.col, styles.delete]}>
+          <DelCtrl model={model} />
         </div>
       </div>
     : null;
@@ -71,4 +75,12 @@ const styles = styler `
 
   lock:
     width: 6%
+
+  delete:
+    width: 16%
+    position: absolute
+    right: -18px
+    bottom: 3px
+    cursor: pointer
+
 `;

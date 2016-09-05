@@ -10,36 +10,34 @@ export class GoldenRectangulesModel {
   constructor() {
     /* Save rectangules data to localStorage */
     autorunAsync(() => {
-      const params = this.rectangulesParameters;
-      if (params) {
-        storeDataToLocalStore('rectangules', toJS(params));
+      if (this.rectangules.length > 0) {
+        this.saveToLs();
       }
-    }, 500);
+    }, 300);
   }
 
   setMapElement(element) {
     this.mapElement = element;
   }
 
-  @computed get rectangulesParameters() {
-    if (this.rectangules.length) {
-      return this.rectangules.map(rec => {
-        return {
-          props: rec.props,
-          name: rec.name,
-        };
-      });
-    }
-    return false;
+  @computed get rectangulesParametersForLs() {
+    return this.rectangules.map(rec => {
+      return {
+        props: rec.props,
+        name: rec.name,
+      };
+    });
   }
 
   @action recoverFromLs() {
-    const propsFromLs = getDataFromLocalStore('rectangules');
-    if (!propsFromLs) {
-      return;
-    }
-    console.log('recovering from LS');
-    propsFromLs.forEach(rec => this.addNewRectangule(rec));
+    return new Promise((resolve, reject) => {
+      const rectagules = getDataFromLocalStore('rectangules');
+      if (rectagules.length === 0) {
+        reject(false);
+      }
+      rectagules.forEach(rec => this.addNewRectangule(rec));
+      resolve(true);
+    });
   }
 
   @action addNewRectangule({ name, props = null }) {
@@ -54,20 +52,30 @@ export class GoldenRectangulesModel {
     });
   }
 
-  @action addFirstRectangule() {
-    if (this.rectangules.length === 0) {
-      this.addNewRectangule();
-    }
-  }
-
   @action setActive(id) {
     // setActive false for every panel exept for active
     this.rectangules.forEach((rec) => {
       if (rec.id === id) {
+        rec.isActive = true;
         return;
       }
       rec.makeActiveAction(false);
     });
+  }
+
+  @action removeRectangule(id) {
+    // setActive false for every panel exept for active
+    const recId = this.rectangules.findIndex(i => i.id === id);
+    this.rectangules[recId].gmapsOverlay.setMap(null); // this removes from gMaps
+    this.rectangules.splice(recId, 1);
+    this.saveToLs();
+    if (this.rectangules.length > 0) {
+      this.setActive(this.rectangules[0].id);
+    }
+  }
+
+  saveToLs() {
+    storeDataToLocalStore('rectangules', toJS(this.rectangulesParametersForLs));
   }
 
 }

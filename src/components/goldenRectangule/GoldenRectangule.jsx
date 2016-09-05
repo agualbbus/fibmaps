@@ -10,10 +10,17 @@ import SvgRectangule from 'components/goldenRectangule/SvgRectangule';
 @observer
 export default class GoldenRectangule extends Component {
   componentDidMount() {
+    this.containerNode = ReactDOM.findDOMNode(this.refs.container);
+    this.parentNode = ReactDOM.findDOMNode(this.containerNode.parentNode);
     this.props.rectanguleModel.createOverlayAction(
       this.props.rectanguleModel.id,
-      ReactDOM.findDOMNode(this.refs.container)
+      this.containerNode,
     );
+  }
+
+  componentWillUnmount() {
+    // this fixes the problem of gMap manipulating DOM and creating conflict with React.removeChild
+    this.parentNode.appendChild(this.containerNode);
   }
 
   render() {

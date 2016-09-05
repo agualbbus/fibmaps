@@ -46,7 +46,10 @@ export default class StartGoogleMaps extends Component {
     const mapInstance = mapModel.mapInstance = new this._maps.Map(this._mapElement, config);
     this._handleGeolocation(mapInstance, config.center);
     this._maps.event.addListenerOnce(mapInstance, 'idle', () => {
-      goldenRectangulesModel.recoverFromLs();
+      goldenRectangulesModel.recoverFromLs()
+        .catch(() => {
+          this.showModal = true;
+        });
     });
   }
 
@@ -59,11 +62,6 @@ export default class StartGoogleMaps extends Component {
     return (
       <div>
         <GoogleMapDiv ref="mapDiv" />
-        <AddRectangulePrompt
-          showModal={this.showModal}
-          modalSubmit={this._modalSubmit.bind(this)}
-          title={'Add your first Golden Rectangule!'}
-        />
       </div>
     );
   }
