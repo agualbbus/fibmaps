@@ -1,4 +1,3 @@
-import { goldenRectangulesModel } from 'models';
 import { mapModel } from 'models';
 
 function createOverlay(id, elem, position, callbacks) {
@@ -97,7 +96,6 @@ function createOverlay(id, elem, position, callbacks) {
     },
 
     onRemove() {
-      goldenRectangulesModel.removeRectangule(id);
     },
 
     resize() {
