@@ -11,7 +11,7 @@ export default {
   output: {
     path: path.join(__dirname, '..', 'dist'),
     filename: '[name][chunkhash].js',
-    publicPath: path.join('dist'),
+    publicPath: 'dist/',
   },
   entry: {
     bundle: './main.js',
