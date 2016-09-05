@@ -5,7 +5,9 @@
   "scripts": {
     "start": "./node_modules/.bin/webpack-dev-server --port 3000 --config ./webpack.config.babel.js --content-base dist/ --display-error-details --hot --inline",
     "lint": "eslint src",
-    "build:prd": "./node_modules/.bin/webpack --config ./config/production.webpack.config.babel.js"
+    "clean:dist": "./node_modules/.bin/rimraf dist/*",
+    "webpack:prd": "./node_modules/.bin/webpack --config ./config/production.webpack.config.babel.js",
+    "build:prd": "npm run clean:dist && npm run webpack:prd"
   },
   "repository": {
     "type": "git",
@@ -76,7 +78,7 @@
     "redbox-react": "^1.2.2",
     "require-dir-all": "^0.4.9",
     "resolve-url-loader": "^1.4.3",
-    "rimraf": "^2.5.2",
+    "rimraf": "^2.5.4",
     "sass-loader": "^4.0.0",
     "setimmediate": "^1.0.4",
     "sinon": "^1.17.3",
