@@ -1,7 +1,12 @@
 const $script_ = require('scriptjs');
 
+const key = process.env.GMAPS_API_KEY || null;
+
 // TODO add libraries language and other map options
-export default function googleMapLoader(bootstrapURLKeys) {
+export default function googleMapLoader(bootstrapURLKeys = {}) {
+  if (key) {
+    bootstrapURLKeys.key = key;
+  }
   const loadPromise_ = new Promise((resolve, reject) => {
     if (typeof window === 'undefined') {
       reject(new Error('google map cannot be loaded outside browser env'));

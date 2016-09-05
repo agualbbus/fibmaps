@@ -15,7 +15,7 @@ export default class StartGoogleMaps extends Component {
   componentDidMount() {
     this._mapElement = ReactDOM.findDOMNode(this.refs.mapDiv);
     mapModel.mapInstance = this._mapElement;
-    googleMapLoader({})
+    googleMapLoader()
     .then((maps) => {
       this._maps = maps;
       this._initMapHandler();

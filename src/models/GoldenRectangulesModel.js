@@ -38,6 +38,7 @@ export class GoldenRectangulesModel {
     if (!propsFromLs) {
       return;
     }
+    console.log('recovering from LS');
     propsFromLs.forEach(rec => this.addNewRectangule(rec));
   }
 

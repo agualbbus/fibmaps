@@ -11,7 +11,7 @@ export default {
   output: {
     path: path.join(__dirname, '..', 'dist'),
     filename: '[name][chunkhash].js',
-    publicPath: path.join('dist'),
+    publicPath: 'dist/',
   },
   entry: {
     bundle: './main.js',
@@ -21,6 +21,7 @@ export default {
     new ExtractTextPlugin('[name].[hash].css'),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('production'),
+      'process.env.GMAPS_API_KEY': JSON.stringify('AIzaSyBLkae9tVJ1bQ_kaeodENnrXF4if_9Qi0Y'),
     }),
     new webpack.ProvidePlugin({
       $: 'jquery',
