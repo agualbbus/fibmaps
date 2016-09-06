@@ -8,6 +8,7 @@ function createOverlay(id, elem, position, callbacks) {
     bounds: null,
     position: position ? new gMaps.LatLng(position.lat, position.lng) : map.getCenter(), // intial position
     isDraggable: false,
+    elem,
 
     onAdd() {
       const that = this;

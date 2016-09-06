@@ -24,11 +24,11 @@ export default class GoldenRectangule extends Component {
   }
 
   render() {
-    const { props, id, pixelsWidth, isActive } = this.props.rectanguleModel;
+    const { props, id, isActive } = this.props.rectanguleModel;
     const dinamicStyles = {
       transform: `rotateZ(${props.trnfrm.rot.z}deg) rotateX(${props.trnfrm.rot.x}deg) rotateY(${props.trnfrm.rot.y}deg)`,
       transformOrigin: 'left bottom',
-      width: pixelsWidth,
+      width: props.width.px,
       visibility: props.show === true ? 'visible' : 'hidden',
     };
 

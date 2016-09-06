@@ -11,7 +11,7 @@ const properties = () => {
     },
     width: {
       scale: initialSize,
-      percentage: 50,
+      px: initialSize,
     },
     position: null,
     colors: {

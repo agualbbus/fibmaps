@@ -2,7 +2,7 @@ import { observable, action, computed } from 'mobx';
 import rectaguleProps from 'constants/goldenRectanguleProps';
 import ramdomId from 'lib/randomId';
 import createGmapsOverlay from 'lib/googleMapsOverlayHandler';
-
+import { mapModel } from 'models';
 
 class SingleRectanguleModel {
 
@@ -14,12 +14,19 @@ class SingleRectanguleModel {
   constructor(name, props) {
     this.name = name;
     this.props = props || rectaguleProps();
+
+    mapModel.mapInstance.addListener('zoom_changed', () => {
+      setTimeout(() => {
+        this.resizeAction(parseFloat(this.gmapsOverlay.elem.style.width.replace('px', '')));
+      }, 100);
+    });
   }
 
 
-  @computed get pixelsWidth() {
-    return this.props.width.percentage * this.props.width.scale / 100;
+  @computed get pixelsToPercentage() {
+    return this.props.width.px * 100 / this.props.width.scale;
   }
+
 
   @computed get isLocked() {
     return !!this.props.locked;
@@ -49,9 +56,9 @@ class SingleRectanguleModel {
     this.props.trnfrm.rot.z = value;
   }
 
-  @action resizeAction(value) {
+  @action resizeAction(px) {
     if (this.isLocked) return;
-    this.props.width.percentage = value;
+    this.props.width.px = px;
     this.gmapsOverlay.resize();
   }
 
@@ -62,7 +69,7 @@ class SingleRectanguleModel {
     } else if (what === 'dec') {
       this.props.width.scale = this.props.width.scale / 2;
     }
-    this.props.width.percentage = 50;
+    this.props.width.px = this.props.width.scale;
     this.gmapsOverlay.resize();
   }
 

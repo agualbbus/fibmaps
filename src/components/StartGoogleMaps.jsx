@@ -6,7 +6,6 @@ import googleMapLoader from 'lib/googleMapLoader';
 import initMapConfig from 'constants/initMapConfig';
 import { goldenRectangulesModel, mapModel } from 'models';
 import GoogleMapDiv from 'components/GoogleMapDiv';
-import AddRectangulePrompt from 'components/controlsPanel/AddRectangulePrompt';
 
 @observer
 export default class StartGoogleMaps extends Component {
