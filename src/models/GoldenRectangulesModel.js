@@ -36,7 +36,7 @@ export class GoldenRectangulesModel {
         reject(false);
       }
       rectagules.forEach(rec => this.addNewRectangule(rec));
-      resolve(true);
+      resolve(this.rectangules);
     });
   }
 

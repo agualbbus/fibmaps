@@ -6,11 +6,6 @@ import { mapModel } from 'models';
 
 class SingleRectanguleModel {
 
-  @observable props = {}
-  @observable isActive = true;   // this is being obeserved by parent goldenRectangulesModel
-  id = ramdomId();
-  gmapsOverlay = { position: null }; // assigned later
-
   constructor(name, props) {
     this.name = name;
     this.props = props || rectaguleProps();
@@ -22,6 +17,10 @@ class SingleRectanguleModel {
     });
   }
 
+  @observable props = {}
+  @observable isActive = true;   // this is being obeserved by parent goldenRectangulesModel
+  id = ramdomId();
+  gmapsOverlay = { position: null }; // assigned later
 
   @computed get pixelsToPercentage() {
     return this.props.width.px * 100 / this.props.width.scale;
