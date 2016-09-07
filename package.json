@@ -1,6 +1,6 @@
 {
   "name": "react-hot-boilerplate",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Boilerplate for ReactJS project with hot code reloading",
   "scripts": {
     "start": "./node_modules/.bin/webpack-dev-server --port 3000 --config ./webpack.config.babel.js --content-base dist/ --display-error-details --hot --inline",
