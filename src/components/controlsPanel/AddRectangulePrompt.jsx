@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
-import Modal from 'react-bootstrap/lib/modal';
+import Modal from 'react-bootstrap/lib/Modal';
 
 @observer
 export default class AddRectangulePrompt extends Component {
