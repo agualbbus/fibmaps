@@ -3,6 +3,14 @@ $diameter: 15px;
 /**
  * Rangeslider
  */
+
+.disabled .rangeslider {
+	.rangeslider__fill {
+		background:  rgba(183, 183, 183, 0.78);
+		cursor: not-allowed;
+	}
+}
+
 .rangeslider {
 	margin: 5px 0 8px;
 	position: relative;

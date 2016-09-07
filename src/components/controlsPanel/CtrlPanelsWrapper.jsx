@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
-import {observable} from "mobx"
+import { observable } from 'mobx';
 import styler from 'react-styling';
 import radium from 'radium';
 import CtrlPanel from 'components/controlsPanel/CtrlPanel';
@@ -56,12 +56,12 @@ const styles = styler `
     max-width: 960px
     position: fixed
     bottom: 0
-    right: 0%
+    left: 0%
     padding-top: 8px
     z-index: 2
     height: 95px
     border: 1px solid #ccc
-    box-shadow: 10px 12px 12px 10px #b3b3b3
+    box-shadow: rgb(179, 179, 179) -9px 12px 12px 10px
     background-color: rgba(19, 19, 19, 0.81)
 
   tabslist

@@ -19,20 +19,26 @@ export default class SizeCtrl extends Component {
 
 
   _handleResize(value) {
+    if (this.props.model.isLocked) return;
     const percentageToPx = value * this.props.model.props.width.scale / 100;
     this.input.value = percentageToPx;
     this.props.model.resizeAction(percentageToPx);
   }
 
   _handleInputChange(e) {
+    if (this.props.model.isLocked) {
+      this.input.value = this.props.model.props.width.px;
+      return;
+    }
     let value = parseInt(e.target.value, 10);
     value = value <= 0 ? 10 : value;
     this.props.model.resizeAction(value);
   }
 
   render() {
+    const disabledClass = `${this.props.model.isLocked ? 'disabled' : ''}`;
     return (
-      <div>
+      <div className={disabledClass}>
         <label>Resize(px)</label>
           <Slider
             min={1}

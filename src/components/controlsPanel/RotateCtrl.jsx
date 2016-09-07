@@ -12,11 +12,16 @@ export default class RotateCtrl extends Component {
   }
 
   _handleRotate(value) {
+    if (this.props.model.isLocked) return;
     this.props.model.rotateAction(value);
     this.input.value = value;
   }
 
   _handleInputChange(e) {
+    if (this.props.model.isLocked) {
+      this.input.value = this.props.model.props.trnfrm.rot.z;
+      return;
+    }
     let value = parseInt(e.target.value, 10);
     value = value > 180 ? 180 : value < -180 ? -180 : value;
     this.props.model.rotateAction(value);
@@ -24,8 +29,9 @@ export default class RotateCtrl extends Component {
   }
 
   render() {
+    const disabledClass = `${this.props.model.isLocked ? 'disabled' : ''}`;
     return (
-      <div>
+      <div className={disabledClass}>
         <label>Rotate (deg)</label>
           <Slider
             min={-180}
@@ -35,6 +41,7 @@ export default class RotateCtrl extends Component {
             onChange={this._handleRotate.bind(this)}
           />
           <input
+            disabled={this.props.model.isLocked}
             ref="input"
             type="number"
             style={styles.input}

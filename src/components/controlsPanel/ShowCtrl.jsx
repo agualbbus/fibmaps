@@ -8,12 +8,13 @@ export default class ShowCtrl extends Component {
   }
 
   render() {
+    const btnClass = `btn btn-sm ${this.props.model.isLocked ? 'disabled' : ''}`;
     return (
       <div>
-        <label>Show</label>
+        <label>{ this.props.model.props.show ? 'Visible' : 'Hidden' }</label>
         <br />
-        <button className="btn btn-sm" onClick={this.handleShow.bind(this)}>
-        { this.props.model.props.show ? 'Hide' : 'show' }
+        <button className={btnClass} onClick={this.handleShow.bind(this)}>
+        { this.props.model.props.show ? 'Hide' : 'Show' }
         </button>
       </div>
     );

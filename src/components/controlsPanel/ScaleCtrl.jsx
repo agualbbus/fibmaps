@@ -12,13 +12,14 @@ export default class ScaleCtrl extends Component {
   }
 
   render() {
+    const btnClass = `btn ${this.props.model.isLocked ? 'disabled' : ''}`;
     return (
       <div>
         <label>Scale</label>
         <br />
         <div className="btn-group btn-group-sm">
-          <button className="btn" onClick={this.handleScale.bind(this)} data-do="inc">X2</button>
-          <button className="btn" onClick={this.handleScale.bind(this)} data-do="dec">1/2</button>
+          <button className={btnClass} onClick={this.handleScale.bind(this)} data-do="inc">X2</button>
+          <button className={btnClass} onClick={this.handleScale.bind(this)} data-do="dec">1/2</button>
         </div>
       </div>
     );

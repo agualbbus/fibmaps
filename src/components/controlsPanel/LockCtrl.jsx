@@ -10,7 +10,7 @@ export default class LockCtrl extends Component {
   render() {
     return (
       <div>
-        <label>Lock</label>
+        <label>{ this.props.model.isLocked ? 'Locked' : 'Unlocked'}</label>
         <br />
         <button className="btn btn-sm" onClick={this.handleLock.bind(this)} >
           { this.props.model.isLocked ? <i className="fa fa-lock"></i> : <i className="fa fa-unlock"></i> }

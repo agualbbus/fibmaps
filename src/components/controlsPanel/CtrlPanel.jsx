@@ -74,7 +74,7 @@ const styles = styler `
     width: 6%
 
   lock:
-    width: 6%
+    width: 8%
 
   delete:
     width: 16%

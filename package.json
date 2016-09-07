@@ -1,7 +1,7 @@
 {
-  "name": "react-hot-boilerplate",
-  "version": "1.0.1",
-  "description": "Boilerplate for ReactJS project with hot code reloading",
+  "name": "Fibmaps",
+  "version": "2.1.2",
+  "description": "Fibonnaci over maps",
   "scripts": {
     "start": "./node_modules/.bin/webpack-dev-server --port 3000 --config ./webpack.config.babel.js --content-base dist/ --display-error-details --hot --inline",
     "lint": "eslint src",
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/agualbbus/fibmapssrc.git"
+    "url": "https://github.com/agualbbus/fibmaps.git"
   },
   "keywords": [
     "react",
@@ -23,7 +23,7 @@
     "edit",
     "webpack"
   ],
-  "author": "Agustin Albertengo <contact@agustinalbertengo.com> (http://github.com/agualbbus)",
+  "author": "Agustín Albertengo <contact@agustinalbertengo.com> (http://github.com/agualbbus)",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/agualbbus/fibmaps/issues"
