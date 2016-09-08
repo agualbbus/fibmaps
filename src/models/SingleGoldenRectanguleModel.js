@@ -64,9 +64,9 @@ class SingleRectanguleModel {
   @action scaleAction(what) {
     if (this.isLocked) return;
     if (what === 'inc') {
-      this.props.width.scale = this.props.width.scale * 2;
+      this.props.width.scale = this.props.width.px * 2;
     } else if (what === 'dec') {
-      this.props.width.scale = this.props.width.scale / 2;
+      this.props.width.scale = this.props.width.px / 2;
     }
     this.props.width.px = this.props.width.scale;
     this.gmapsOverlay.resize();

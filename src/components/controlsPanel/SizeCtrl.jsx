@@ -42,7 +42,7 @@ export default class SizeCtrl extends Component {
         <label>Resize(px)</label>
           <Slider
             min={1}
-            max={100}
+            max={200}
             step={1}
             value={this.props.model.pixelsToPercentage}
             onChange={this._handleResize.bind(this)}
@@ -65,6 +65,6 @@ SizeCtrl.propTypes = {
 
 const styles = styler `
   input
-    width: 50px
+    width: 55px
     color: #000
 `;

@@ -39,10 +39,10 @@ function createOverlay(id, elem, position, callbacks) {
                 function(e) { // eslint-disable-line
                   if (that.isDraggable) {
                     const proj = that.getProjection();
-                    const left = that.origin.clientX-e.clientX; // eslint-disable-line
-                    const top = that.origin.clientY-e.clientY; // eslint-disable-line
+                    const left = that.origin.clientX - e.clientX;
+                    const top = that.origin.clientY - e.clientY;
                     const pos = proj.fromLatLngToDivPixel(that.position);
-                    const latLngPos = proj.fromDivPixelToLatLng(new gMaps.Point(pos.x-left, pos.y-top)); // eslint-disable-line
+                    const latLngPos = proj.fromDivPixelToLatLng(new gMaps.Point(pos.x - left, pos.y - top));
                     that.position = callbacks.setNewPosition(latLngPos);
                     that.origin = e;
                     that.setNewBounds();
