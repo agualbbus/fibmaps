@@ -9,8 +9,9 @@ const properties = () => {
         z: 0,
       },
       axis: {
-        x: '71%',
-        y: '73.39',
+        // this % coors are calculatred assuming some extra space originated by svg
+        x: '70.45%', // percent of rectangule container width
+        y: '72.20%', // "    " "" "      "   "    "    height
       },
     },
     width: {

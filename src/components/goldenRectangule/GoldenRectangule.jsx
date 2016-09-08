@@ -5,7 +5,6 @@ import radium from 'radium';
 import styler from 'react-styling';
 import makeRgbClr from 'lib/makeRgbClr';
 import SvgRectangule from 'components/goldenRectangule/SvgRectangule';
-import $ from 'jquery';
 
 @radium
 @observer
@@ -63,7 +62,6 @@ const styles = styler`
     width: 350px
     z-index: 999
     display: none
-    cursor: move
 
   activeLayer
     position: absolute

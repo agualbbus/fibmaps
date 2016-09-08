@@ -10,17 +10,19 @@ class SingleRectanguleModel {
     this.name = name;
     this.props = props || rectaguleProps();
 
+    // automatic width fix on zooming
     mapModel.mapInstance.addListener('zoom_changed', () => {
       setTimeout(() => {
+        // gmaps manipulates rectangules's width automatically, so we need to update our model
         this.resizeAction(parseFloat(this.gmapsOverlay.elem.style.width.replace('px', '')));
       }, 100);
     });
   }
 
   @observable props = {}
-  @observable isActive = true;   // this is being obeserved by parent goldenRectangulesModel
+  @observable isActive = true;   // this is being observed by parent goldenRectangulesModel
   id = ramdomId();
-  gmapsOverlay = { position: null }; // assigned later
+  gmapsOverlay = null; // assigned later
 
   @computed get pixelsToPercentage() {
     return this.props.width.px * 100 / this.props.width.scale;
@@ -69,7 +71,9 @@ class SingleRectanguleModel {
       this.props.width.scale = this.props.width.px / 2;
     }
     this.props.width.px = this.props.width.scale;
-    this.gmapsOverlay.resize();
+    if (this.gmapsOverlay) {
+      this.gmapsOverlay.resize();
+    }
   }
 
   @action visualizeAction() {

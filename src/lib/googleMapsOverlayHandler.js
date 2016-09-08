@@ -23,12 +23,24 @@ function createOverlay(id, elem, position, callbacks) {
       );
 
       gMaps.event.addDomListener(
+        map.getDiv(),
+        'mouseover',
+        function() {
+          if (!callbacks.isLockedCb()) {
+            elem.style.cursor = 'move';
+          } else {
+            elem.style.cursor = 'default';
+          }
+        }
+      );
+
+
+      gMaps.event.addDomListener(
           elem,
           'mousedown',
           function(e) { // eslint-disable-line
             callbacks.makeActiveCb();
             if (!this.isDraggable && callbacks.isActive() && callbacks.isLockedCb() === false) {
-              this.style.cursor = 'move';
               map.set('draggable', false);
               that.origin = e;
               that.isDraggable = true;
@@ -57,7 +69,6 @@ function createOverlay(id, elem, position, callbacks) {
 
       gMaps.event.addDomListener(elem, 'mouseup', function() { // eslint-disable-line
         map.set('draggable', true);
-        this.style.cursor = 'default';
         gMaps.event.removeListener(that.moveHandler);
         that.isDraggable = false;
       });
