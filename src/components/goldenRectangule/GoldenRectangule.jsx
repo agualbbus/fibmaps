@@ -5,6 +5,7 @@ import radium from 'radium';
 import styler from 'react-styling';
 import makeRgbClr from 'lib/makeRgbClr';
 import SvgRectangule from 'components/goldenRectangule/SvgRectangule';
+import $ from 'jquery';
 
 @radium
 @observer
@@ -27,7 +28,7 @@ export default class GoldenRectangule extends Component {
     const { props, id, isActive } = this.props.rectanguleModel;
     const dinamicStyles = {
       transform: `rotateZ(${props.trnfrm.rot.z}deg) rotateX(${props.trnfrm.rot.x}deg) rotateY(${props.trnfrm.rot.y}deg)`,
-      transformOrigin: 'left bottom',
+      transformOrigin: `${props.trnfrm.axis.x} ${props.trnfrm.axis.y} 0`,
       width: props.width.px,
       visibility: props.show === true ? 'visible' : 'hidden',
     };
@@ -36,7 +37,12 @@ export default class GoldenRectangule extends Component {
     const activeLayer = (<div style={[styles.activeLayer, activeBorderClr]} />);
 
     return (
-      <div style={[styles.container, dinamicStyles]} ref="container" className="GoldenRectangule" id={id}>
+      <div
+        style={[styles.container, dinamicStyles]}
+        ref="container"
+        className="GoldenRectangule"
+        id={id}
+      >
         <SvgRectangule model={this.props.rectanguleModel} ref="svg" />
         { isActive ? activeLayer : null }
       </div>

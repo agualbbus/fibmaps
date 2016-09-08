@@ -8,6 +8,10 @@ const properties = () => {
         y: 0,
         z: 0,
       },
+      axis: {
+        x: '71%',
+        y: '73.39',
+      },
     },
     width: {
       scale: initialSize,
