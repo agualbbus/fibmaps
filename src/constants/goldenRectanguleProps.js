@@ -8,6 +8,11 @@ const properties = () => {
         y: 0,
         z: 0,
       },
+      axis: {
+        // this % coors are calculatred assuming some extra space originated by svg
+        x: '70.45%', // percent of rectangule container width
+        y: '72.20%', // "    " "" "      "   "    "    height
+      },
     },
     width: {
       scale: initialSize,

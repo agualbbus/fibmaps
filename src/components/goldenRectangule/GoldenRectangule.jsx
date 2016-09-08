@@ -27,7 +27,7 @@ export default class GoldenRectangule extends Component {
     const { props, id, isActive } = this.props.rectanguleModel;
     const dinamicStyles = {
       transform: `rotateZ(${props.trnfrm.rot.z}deg) rotateX(${props.trnfrm.rot.x}deg) rotateY(${props.trnfrm.rot.y}deg)`,
-      transformOrigin: 'left bottom',
+      transformOrigin: `${props.trnfrm.axis.x} ${props.trnfrm.axis.y} 0`,
       width: props.width.px,
       visibility: props.show === true ? 'visible' : 'hidden',
     };
@@ -36,7 +36,12 @@ export default class GoldenRectangule extends Component {
     const activeLayer = (<div style={[styles.activeLayer, activeBorderClr]} />);
 
     return (
-      <div style={[styles.container, dinamicStyles]} ref="container" className="GoldenRectangule" id={id}>
+      <div
+        style={[styles.container, dinamicStyles]}
+        ref="container"
+        className="GoldenRectangule"
+        id={id}
+      >
         <SvgRectangule model={this.props.rectanguleModel} ref="svg" />
         { isActive ? activeLayer : null }
       </div>
@@ -57,7 +62,6 @@ const styles = styler`
     width: 350px
     z-index: 999
     display: none
-    cursor: move
 
   activeLayer
     position: absolute
