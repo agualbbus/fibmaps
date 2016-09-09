@@ -3,7 +3,7 @@
   "version": "2.1.2",
   "description": "Fibonnaci over maps",
   "scripts": {
-    "start": "./node_modules/.bin/webpack-dev-server --port 3000 --config ./webpack.config.babel.js --content-base dist/ --display-error-details --hot --inline",
+    "start": "./node_modules/.bin/webpack-dev-server --https --port 3000 --config ./webpack.config.babel.js --content-base dist/ --display-error-details --hot --inline",
     "lint": "eslint src",
     "clean:dist": "./node_modules/.bin/rimraf dist/*",
     "webpack:prd": "./node_modules/.bin/webpack --config ./config/production.webpack.config.babel.js",

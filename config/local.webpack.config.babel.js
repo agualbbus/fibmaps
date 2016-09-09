@@ -8,10 +8,10 @@ export default {
   output: {
     path: path.join(__dirname, '..', 'dist'),
     filename: 'bundle.js',
-    publicPath: 'http://localhost:3000/',
+    publicPath: 'https://localhost:3000/',
   },
   entry: [
-    'webpack-dev-server/client?http://0.0.0.0:3000',
+    'webpack-dev-server/client?https://0.0.0.0:3000',
     'webpack/hot/only-dev-server',
     './main.js',
   ],
